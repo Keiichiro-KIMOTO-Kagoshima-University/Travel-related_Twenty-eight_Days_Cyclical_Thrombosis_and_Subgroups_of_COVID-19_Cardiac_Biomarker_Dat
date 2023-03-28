@@ -1,18 +1,22 @@
 # Novel-Findings-in-Travel-related-Thrombosis-and-COVID-19-Related-Cardiovascular-Data
-Novel Findings in Travel-related Thrombosis and COVID-19 Related Cardiovascular Data: Data Mining Method for Previously Published Data
-########################################################################################################################
- Readme
-########################################################################################################################
-# Title of the manuscript (research):
-# Novel Findings in Travel-related Thrombosis and COVID-19 Related Cardiovascular Data:
-# Data Mining Method for Previously Published Data
-# Author of this research:
-# Keiichiro Kimoto, M.Sc., Munekazu Yamakuchi, M.D., Ph.D., Kazunori Takenouchi, M.D., Ph.D.,
-# Teruto Hashiguchi, M.D., Ph.D.
-# Author of this program: Keiichiro Kimoto, M.Sc. in Biol. (Kagoshima University, Data Strategy Research Institute)
-#
-########################################################################################################################
 
+Novel Findings in Travel-related Thrombosis and COVID-19 Related Cardiovascular Data: Data Mining Method for Previously Published Data
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Readme
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Title of the manuscript (research):
+
+ Novel Findings in Travel-related Thrombosis and COVID-19 Related Cardiovascular Data:
+ Data Mining Method for Previously Published Data
+
+ Author of this research:
+
+ Keiichiro Kimoto, M.Sc., Munekazu Yamakuchi, M.D., Ph.D., Kazunori Takenouchi, M.D., Ph.D.,
+ Teruto Hashiguchi, M.D., Ph.D.
+
+ Author of this program: Keiichiro Kimoto, M.Sc. in Biol. (Kagoshima University, Data Strategy Research Institute)
+
+--------------------------------------------------------------------------------------------------------------------------------------------
 The results analyzed by the programs in this repository and the interpretation will be peer-reviewed. So, please be aware that the contents of this repository have not been reviewed.
 
 Possibly, an error occurs due to a negative value in a root depending on the calculation accuracy.
