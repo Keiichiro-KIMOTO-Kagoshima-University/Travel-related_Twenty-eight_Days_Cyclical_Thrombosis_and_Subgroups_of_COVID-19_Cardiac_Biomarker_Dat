@@ -1,6 +1,6 @@
-# Novel-Findings-in-Travel-related-Thrombosis-and-COVID-19-Related-Cardiovascular-Data
+# Findings_in_Travel-related_Thrombosis_and_COVID-19_Related_Cardiac_Biomarker_Data
 
-Novel Findings in Travel-related Thrombosis and COVID-19 Related Cardiovascular Data: Data Mining Method for Previously Published Data
+Findings in Travel-related Thrombosis and COVID-19 Related Cardiac Biomarker Data: Combination of Novel Review Strategy and Meta-analysis Method Discovered Twenty-eight Days Cycles of Thrombosis and Latent Subgroup Patterns
 --------------------------------------------------------------------------------------------------------------------------------------------
  Readme
 --------------------------------------------------------------------------------------------------------------------------------------------
