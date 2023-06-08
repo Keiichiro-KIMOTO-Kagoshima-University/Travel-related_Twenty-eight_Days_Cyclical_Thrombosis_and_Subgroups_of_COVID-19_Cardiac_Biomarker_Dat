@@ -6,8 +6,8 @@ Findings in Travel-related Thrombosis and COVID-19 Related Cardiac Biomarker Dat
 --------------------------------------------------------------------------------------------------------------------------------------------
  Title of the manuscript (research):
 
- Novel Findings in Travel-related Thrombosis and COVID-19 Related Cardiovascular Data:
- Data Mining Method for Previously Published Data
+Findings in Travel-related Thrombosis and COVID-19 Related Cardiac Biomarker Data: 
+Combination of Novel Review Strategy and Meta-analysis Method Discovered Twenty-eight Days Cycles of Thrombosis and Latent Subgroup Patterns
 
  Author of this research:
 
