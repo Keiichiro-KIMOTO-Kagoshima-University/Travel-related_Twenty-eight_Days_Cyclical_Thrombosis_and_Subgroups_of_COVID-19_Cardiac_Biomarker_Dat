@@ -2,9 +2,8 @@
 # Fig. 5. Cyclic pattern of thrombosis onset appeared in a figure by Kelman et al.(00_Kimoto_et_al_(2023)_[_Fig_05_].py)
 ########################################################################################################################
 # Title of the manuscript (research):
-# Findings in Travel-related Thrombosis and COVID-19 Related Cardiac Biomarker Data:
-# Combination of Novel Review Strategy and Meta-analysis Method Discovered Twenty-eight Days Cycles of Thrombosis and
-# Latent Subgroup Patterns
+# Travel-related Twenty-eight Days Cyclical Thrombosis and Subgroups of COVID-19 Cardiac Biomarker Data:
+# Novel Review Strategy and Meta-analysis Method
 # Author of this research:
 # Keiichiro Kimoto, M.Sc.1, 2, Munekazu Yamakuchi, M.D., Ph.D.1, Kazunori Takenouchi, M.D., Ph.D. 1,
 # Teruto Hashiguchi, M.D., Ph.D.1
@@ -12,7 +11,7 @@
 # 1 Department of Laboratory and Vascular Medicine, Kagoshima University Graduate School of Medical and Dental Sciences,
 # 8-35-1 Sakuragaoka, Kagoshima 890-8544, Japan
 # 2 Present Affiliation: External Advisor for Data Strategy Research Institute, Yokohama, Japan
-# Corresponding authe: Keiichiro Kimoto, M.Sc.
+# Corresponding author: Keiichiro Kimoto, M.Sc.
 #
 # Program version:1.0
 # Author of this program: Keiichiro Kimoto, M.Sc. in Biol. (Kagoshima University, Data Strategy Research Institute)

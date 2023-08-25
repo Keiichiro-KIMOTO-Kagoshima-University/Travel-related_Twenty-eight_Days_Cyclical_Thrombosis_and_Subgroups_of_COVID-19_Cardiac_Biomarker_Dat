@@ -2,9 +2,8 @@
 # Fig. S3. Curve fitting to the dataset reported by Philbrick et al. (01_Kimoto_et_al_(2023)_[Fig_S_03].py)
 ########################################################################################################################
 # Title of the manuscript (research):
-# Findings in Travel-related Thrombosis and COVID-19 Related Cardiac Biomarker Data:
-# Combination of Novel Review Strategy and Meta-analysis Method Discovered Twenty-eight Days Cycles of Thrombosis and
-# Latent Subgroup Patterns
+# Travel-related Twenty-eight Days Cyclical Thrombosis and Subgroups of COVID-19 Cardiac Biomarker Data:
+# Novel Review Strategy and Meta-analysis Method
 # Author of this research:
 # Keiichiro Kimoto, M.Sc.1, 2, Munekazu Yamakuchi, M.D., Ph.D.1, Kazunori Takenouchi, M.D., Ph.D. 1,
 # Teruto Hashiguchi, M.D., Ph.D.1

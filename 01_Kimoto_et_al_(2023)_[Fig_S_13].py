@@ -1,11 +1,10 @@
 ########################################################################################################################
-# Fig. S13. Three subgroup patterns appeared in a figure reported by Guo et al.
+# Fig. S13. Bimodal distributions & tiled parabola in COVID-19 patients.
 # (01_Kimoto_et_al_(2023)_[Fig_S_13].py)
 ########################################################################################################################
 # Title of the manuscript (research):
-# Findings in Travel-related Thrombosis and COVID-19 Related Cardiac Biomarker Data:
-# Combination of Novel Review Strategy and Meta-analysis Method Discovered Twenty-eight Days Cycles of Thrombosis and
-# Latent Subgroup Patterns
+# Travel-related Twenty-eight Days Cyclical Thrombosis and Subgroups of COVID-19 Cardiac Biomarker Data:
+# Novel Review Strategy and Meta-analysis Method
 # Author of this research:
 # Keiichiro Kimoto, M.Sc.1, 2, Munekazu Yamakuchi, M.D., Ph.D.1, Kazunori Takenouchi, M.D., Ph.D. 1,
 # Teruto Hashiguchi, M.D., Ph.D.1
@@ -13,7 +12,7 @@
 # 1 Department of Laboratory and Vascular Medicine, Kagoshima University Graduate School of Medical and Dental Sciences,
 # 8-35-1 Sakuragaoka, Kagoshima 890-8544, Japan
 # 2 Present Affiliation: External Advisor for Data Strategy Research Institute, Yokohama, Japan
-# Corresponding authe: Keiichiro Kimoto, M.Sc.
+# Corresponding author: Keiichiro Kimoto, M.Sc.
 #
 # Program version:1.0
 # Author of this program: Keiichiro Kimoto, M.Sc. in Biol. (Kagoshima University, Data Strategy Research Institute)
@@ -46,8 +45,35 @@ pd.set_option("display.width", 300)
 import matplotlib.ticker as ticker
 import matplotlib.pyplot as plt
 import mpl_toolkits.axes_grid1.inset_locator as mpl_inset
-################################
+import matplotlib.patches as pat
+from PIL import Image # py -m pip install pillow
+import matplotlib.image as mpimg
+# import cv2
+#pip install opencv-contrib-python
+#path_PyROOT = os.path.abspath("/home/root_src/bindings/pyroot_legacy/ROOT.py")
+########################################################################################################################
+# For Manuscripts to Scientific Jounals
+########################################################################################################################
+print(matplotlib.get_cachedir())
+#/home/kimoto/.cache/matplotlib: fontlist-v310.json  fontlist-v330.json  tex.cache#
+print(matplotlib.matplotlib_fname())
+print(matplotlib.rcParams["font.family"])
+print(matplotlib.rcParams["font.sans-serif"])
+matplotlib.rcParams['font.family'] = "sans-serif"
+matplotlib.rcParams['font.sans-serif'] = ["Arial"]
+########################################################################################################################
+#conda-forge / packages / root 6.24.2
+#https://anaconda.org/conda-forge/root/
+#To install this package with conda run one of the following:
+#conda install -c conda-forge root
+#conda install -c conda-forge/label/gcc7 root
+#conda install -c conda-forge/label/broken root
+#conda install -c conda-forge/label/cf202003 root
+########################################################################################################################
 
+########################################################################################################################
+# Making Data Sets
+########################################################################################################################
 ############################################################################################################
 # () ########## Patient DataSet (Guo et al. 2020) (PatientDataSet) ##########
 ############################################################################################################
@@ -106,52 +132,14 @@ PatientDataSet = pd.DataFrame(
             "FlameLowewX", "FlameLowewY", "LabelC"]
 )
 
+
+PatientDataSet["Plasma TnT / Plasma NT-proBNP"] = PatientDataSet["Plasma TnT"] / PatientDataSet["Plasma NT-proBNP"]
+PatientDataSet["Plasma NT-proBNP / Plasma TnT"] = PatientDataSet["Plasma NT-proBNP"] / PatientDataSet["Plasma TnT"]
+
 print("")
 print("########## Patient DataSet (Guo et al. 2020) (PatientDataSet) ##########")
 print(PatientDataSet)
-############################################################################################################
-# () ########## Patient DataSet (Sugawa et al. 2018) (PatientDataSet_S) ##########
-############################################################################################################
-Point_01 = [0, 46.91427384]
-Point_02 = [0, 28.3994448]
-Point_03 = [0.207770912, 78.21390465]
-Point_04 = [0.207770912, 39.86091571]
-Point_05 = [1.453951477, 98.05112032]
-Point_06 = [1.453951477, 32.36660466]
-Point_07 = [2.077041759, 84.82630988]
-Point_08 = [2.492583583, 39.4199628]
-Point_09 = [3.323444777, 42.50616107]
-Point_10 = [3.738764148, 29.28087851]
-Point_11 = [4.154305971, 32.80755757]
-Point_12 = [4.569625342, 66.31100872]
-Point_13 = [4.985167165, 174.7566261]
-Point_14 = [6.854438013, 33.6894634]
-Point_15 = [7.685299207, 28.3994448]
-Point_16 = [10.17810524, 34.57089711]
-Point_17 = [12.67068883, 59.69860349]
-Point_18 = [14.1246403, 137.285543]
-Point_19 = [19.10980747, 192.3900214]
-Point_20 = [21.80993951, 103.7820918]
-Point_21 = [29.70323208, 36.77518955]
-Point_22 = [36.97321192, 27.07705817]
-Point_23 = [46.11268505, 35.01185002]
-Point_24 = [106.3502329, 58.81669767]
 
-PatientDataSet_S = pd.DataFrame(
-    [Point_01, Point_02, Point_03, Point_04, Point_05, Point_06, Point_07, Point_08, Point_09, Point_10,
-     Point_11, Point_12, Point_13, Point_14, Point_15, Point_16, Point_17, Point_18, Point_19, Point_20,
-     Point_21, Point_22, Point_23, Point_24],
-   index=["Point_01", "Point_02", "Point_03", "Point_04", "Point_05",
-          "Point_06", "Point_07", "Point_08", "Point_09", "Point_10",
-          "Point_11", "Point_12", "Point_13", "Point_14", "Point_15",
-          "Point_16", "Point_17", "Point_18", "Point_19", "Point_20",
-          "Point_21", "Point_22", "Point_23", "Point_24"],
-   columns=["X(BNP)", "Y(TnT)"]
-)
-
-print("")
-print("########## Patient DataSet (Sugawa et al. 2018) (PatientDataSet_S) ##########")
-print(PatientDataSet_S)
 ############################################################################################################
 # () ########## Center of Gravity (CenterOfGravityDataSet) ##########
 ############################################################################################################
@@ -208,46 +196,7 @@ FrameDataSet = pd.DataFrame(
 print("")
 print("########## Frame DataSet (FrameDataSet) ##########")
 print(FrameDataSet)
-############################################################################################################
-# () ########## Parabola (ParabolaDataSet) ##########
-############################################################################################################
-G1_ParabolaU = ["", np.NaN, 2/3, 16.6873, 0.0725, 0.0000]
-G1_ParabolaR = ["y = 25.031x^2 - 2.4775x - 0.1503", 0.5753, 1, 25.031, 0.0495, -0.2116]
-G1_ParabolaL = ["", np.NaN, 3/2, 37.5465, 0.0265, -0.4232]
-G2_ParabolaU = ["", np.NaN, 2/3, 18.0647, 0.1732, 0.0000]
-G2_ParabolaR = ["y = 27.097x^2 - 7.0563x - 0.3422", 0.6395, 1, 27.097, 0.1302, -0.8016]
-G2_ParabolaL = ["", np.NaN, 3/2, 40.6455, 0.0872, -1.6032]
-G3_ParabolaU = ["", np.NaN, 2/3, 1.0225, 0.4649, 0.0000]
-G3_ParabolaR = ["y = 1.5337x^2 - 0.9751x - 0.3752", 0.4931, 1, 1.5337, 0.31789, -0.5302]
-G3_ParabolaL = ["", np.NaN, 3/2, 2.3006, 0.1709, -1.0604]
 
-ParabolaDataSet = pd.DataFrame(
-    [G1_ParabolaU, G1_ParabolaR, G1_ParabolaL,
-     G2_ParabolaU, G2_ParabolaR, G2_ParabolaL,
-     G3_ParabolaU, G3_ParabolaR, G3_ParabolaL],
-   index=["G1_U", "G1_R", "G1_L", "G2_U", "G2_R", "G2_L", "G3_U", "G3_R", "G3_L"],
-   columns=["Equation", "R^2", "Coef.", "a", "Px", "Py"]
-)
-
-print("")
-print("########## Parabola (ParabolaDataSet) ##########")
-print(ParabolaDataSet)
-############################################################################################################
-# () ########## Solution (SolutionDataSet) ##########
-############################################################################################################
-SolutionDataG1 = [-0.0425, 0.0000, 0.1414, 0.0000, 0.0725, 0.0000, -0.16, 0.93, 0.14, 0.08]
-SolutionDataG2 = [-0.0418, 0.0000, 0.3022, 0.0000, 0.1732, 0.0000, -0.22, 2.2, 0.32, 0.68]
-SolutionDataG3 = [-0.2701, 0.0000, 0.9058, 0.0000, 0.4649, 0.0000, -1.04, 2.32, 0.91, 0.2]
-
-SolutionDataSet = pd.DataFrame(
-    [SolutionDataG1, SolutionDataG2, SolutionDataG3],
-   index=["G1", "G2", "G3"],
-   columns=["So1x", "So1y", "So2x", "So2y", "So14x", "So14y", "Lx", "Ly", "Rx", "Ry"]
-)
-
-print("")
-print("########## Solution (SolutionDataSet) ##########")
-print(SolutionDataSet)
 ############################################################################################################
 # () ########## Parabola (Rotated) (ParabolaRDataSet) ##########
 ############################################################################################################
@@ -266,586 +215,573 @@ print("")
 print("########## Parabola (Rotated) (ParabolaRDataSet) ##########")
 print(ParabolaRDataSet)
 
-############################################################################################################
-# () ########## Vector (Rotated Axis to the Circle) (VectorDataSet) ##########
-############################################################################################################
-V1 = [0.00, 0.00, 0.00, 4.38, 0.00, 4.38, 0.00, 4.50]
-V2 = [0.28, 3.99, 0.31, 4.36, 0.03, 0.37, 0.32, 4.49]
-V3 = [0.80, 3.92, 0.87, 4.29, 0.07, 0.37, 0.90, 4.41]
-V4 = [2.25, 3.31, 2.46, 3.62, 0.21, 0.31, 2.53, 3.72]
-V5 = [0.00, 0.00, 4.38, 0.00, 4.38, 0.00, 4.50, 0.00]
+G3_ParabolaR = [0.4849, -1.4263, -0.2786, 1.0487, -1.3686, 1.6372, 1.3300, 3.5100, 3.1500, 2.0400]
+G3_ParabolaR_CRPH = [0.42126, -1.23900, -0.42364, 0.91103, -1.15538, 1.76697]
+G3_ParabolaR_CRPL = [0.60196, -1.77048, -0.47171, 1.30183, -1.08467, 1.39727]
 
-VectorDataSet = pd.DataFrame(
-    [V1, V2, V3, V4, V5],
-   index=["V1", "V2", "V3", "V4", "V5"],
-   columns=["Sx", "Sy", "Ex", "Ey", "deltaX", "deltaY", "CircleX", "CircleY"]
+ParabolaRDataSet3 = pd.DataFrame(
+    [G3_ParabolaR, G3_ParabolaR_CRPH, G3_ParabolaR_CRPL],
+   index=["G3", "CRPH", "CRPL"],
+   columns=["y^2", "x*y", "y", "x^2", "x", "c", "Sx", "Sy", "Ex", "Ey"]
 )
 
 print("")
-print("########## Vector (Rotated Axis to the Circle) (VectorDataSet) ##########")
-print(VectorDataSet)
+print("########## (ParabolaDataSet3) ##########")
+print(ParabolaRDataSet3)
 
 img_01 = plt.imread("Guo_2020_Fig1B.png")
 img_02 = plt.imread("Sugawa_2018_Fig1.png")
+
+
+Patient_001 = [0.04, 2.01742]
+Patient_002 = [0.08, 2.02749]
+Patient_003 = [0.12, 2.04454]
+Patient_004 = [0.16, 2.02009]
+Patient_005 = [0.20, 2.03445]
+Patient_006 = [0.24, 2.04749]
+Patient_007 = [0.28, 2.03641]
+Patient_008 = [0.32, 1.99047]
+Patient_009 = [0.36, 1.98671]
+Patient_010 = [0.40, 2.06711]
+Patient_011 = [0.44, 2.09772]
+Patient_012 = [0.48, 2.00539]
+Patient_013 = [0.52, 1.86985]
+Patient_014 = [0.56, 2.01679]
+Patient_015 = [0.60, 2.12183]
+Patient_016 = [0.64, 1.94453]
+Patient_017 = [0.68, 1.86497]
+Patient_018 = [0.72, 1.87444]
+Patient_019 = [0.76, 2.09483]
+Patient_020 = [0.80, 1.91073]
+Patient_021 = [0.84, 1.69244]
+Patient_022 = [0.88, 1.70968]
+Patient_023 = [0.92, 1.81376]
+Patient_024 = [0.96, 2.04219]
+Patient_025 = [1.00, 1.69059]
+Patient_026 = [1.04, 1.75939]
+Patient_027 = [1.08, 1.95321]
+Patient_028 = [1.12, 1.84170]
+Patient_029 = [1.16, 1.58169]
+Patient_030 = [1.20, 1.75585]
+Patient_031 = [1.24, 1.73497]
+Patient_032 = [1.28, 1.47847]
+Patient_033 = [1.32, 1.91150]
+Patient_034 = [1.36, 1.44962]
+Patient_035 = [1.40, 1.85063]
+Patient_036 = [1.44, 1.32298]
+Patient_037 = [1.48, 1.28437]
+Patient_038 = [1.52, 1.74621]
+Patient_039 = [1.56, 1.27232]
+Patient_040 = [1.60, 1.32763]
+Patient_041 = [1.64, 1.57500]
+Patient_042 = [1.68, 1.56609]
+Patient_043 = [1.72, 1.59330]
+Patient_044 = [1.76, 1.76707]
+Patient_045 = [1.80, 1.11264]
+Patient_046 = [1.84, 1.06188]
+Patient_047 = [1.88, 1.40139]
+Patient_048 = [1.92, 0.94084]
+Patient_049 = [1.96, 1.07560]
+Patient_050 = [2.00, 1.38507]
+Patient_051 = [2.04, 1.33408]
+Patient_052 = [2.08, 1.54375]
+Patient_053 = [2.12, 1.60257]
+Patient_054 = [2.16, 1.02029]
+Patient_055 = [2.20, 0.98612]
+Patient_056 = [2.24, 1.79094]
+Patient_057 = [2.28, 0.97916]
+Patient_058 = [2.32, 0.81212]
+Patient_059 = [2.36, 1.14840]
+Patient_060 = [2.40, 1.51680]
+Patient_061 = [2.44, 1.70236]
+Patient_062 = [2.48, 1.38945]
+Patient_063 = [2.52, 1.69072]
+Patient_064 = [2.56, 1.75042]
+Patient_065 = [2.60, 1.67571]
+Patient_066 = [2.64, 1.38623]
+Patient_067 = [2.68, 1.81503]
+Patient_068 = [2.72, 1.80665]
+Patient_069 = [2.76, 1.41073]
+Patient_070 = [2.80, 2.31750]
+Patient_071 = [2.84, 2.24852]
+Patient_072 = [2.88, 1.75950]
+Patient_073 = [2.92, 2.81818]
+Patient_074 = [2.96, 1.93654]
+Patient_075 = [3.00, 2.36998]
+Patient_076 = [3.04, 2.09870]
+Patient_077 = [3.08, 2.19539]
+Patient_078 = [3.12, 2.44747]
+Patient_079 = [3.16, 2.57255]
+Patient_080 = [3.20, 3.24637]
+Patient_081 = [3.24, 2.78881]
+Patient_082 = [3.28, 3.51638]
+Patient_083 = [3.32, 2.68107]
+Patient_084 = [3.36, 2.87259]
+Patient_085 = [3.40, 4.37490]
+Patient_086 = [3.44, 3.13393]
+Patient_087 = [3.48, 3.92099]
+Patient_088 = [3.52, 4.12230]
+Patient_089 = [3.56, 3.78584]
+Patient_090 = [3.60, 4.96660]
+Patient_091 = [3.64, 5.48880]
+Patient_092 = [3.68, 5.70712]
+Patient_093 = [3.72, 4.84752]
+Patient_094 = [3.76, 5.14090]
+Patient_095 = [3.80, 6.31637]
+Patient_096 = [3.84, 5.53198]
+Patient_097 = [3.88, 6.89257]
+Patient_098 = [3.92, 7.86387]
+Patient_099 = [3.96, 7.98237]
+Patient_100 = [4.00, 8.64705]
+
+TestData = pd.DataFrame(
+    [Patient_001, Patient_002, Patient_003, Patient_004, Patient_005, Patient_006,
+     Patient_007, Patient_008, Patient_009, Patient_010, Patient_011, Patient_012,
+     Patient_013, Patient_014, Patient_015, Patient_016, Patient_017, Patient_018,
+     Patient_019, Patient_020, Patient_021, Patient_022, Patient_023, Patient_024,
+     Patient_025, Patient_026, Patient_027, Patient_028, Patient_029, Patient_030,
+     Patient_031, Patient_032, Patient_033, Patient_034, Patient_035, Patient_036,
+     Patient_037, Patient_038, Patient_039, Patient_040, Patient_041, Patient_042,
+     Patient_043, Patient_044, Patient_045, Patient_046, Patient_047, Patient_048,
+     Patient_049, Patient_050, Patient_051, Patient_052, Patient_053, Patient_054,
+     Patient_055, Patient_056, Patient_057, Patient_058, Patient_059, Patient_060,
+     Patient_061, Patient_062, Patient_063, Patient_064, Patient_065, Patient_066,
+     Patient_067, Patient_068, Patient_069, Patient_070, Patient_071, Patient_072,
+     Patient_073, Patient_074, Patient_075, Patient_076, Patient_077, Patient_078,
+     Patient_079, Patient_080, Patient_081, Patient_082, Patient_083, Patient_084,
+     Patient_085, Patient_086, Patient_087, Patient_088, Patient_089, Patient_090,
+     Patient_091, Patient_092, Patient_093, Patient_094, Patient_095, Patient_096,
+     Patient_097, Patient_098, Patient_099, Patient_100],
+    index=["Patient_001", "Patient_002", "Patient_003", "Patient_004", "Patient_005", "Patient_006",
+           "Patient_007", "Patient_008", "Patient_009", "Patient_010", "Patient_011", "Patient_012",
+           "Patient_013", "Patient_014", "Patient_015", "Patient_016", "Patient_017", "Patient_018",
+           "Patient_019", "Patient_020", "Patient_021", "Patient_022", "Patient_023", "Patient_024",
+           "Patient_025", "Patient_026", "Patient_027", "Patient_028", "Patient_029", "Patient_030",
+           "Patient_031", "Patient_032", "Patient_033", "Patient_034", "Patient_035", "Patient_036",
+           "Patient_037", "Patient_038", "Patient_039", "Patient_040", "Patient_041", "Patient_042",
+           "Patient_043", "Patient_044", "Patient_045", "Patient_046", "Patient_047", "Patient_048",
+           "Patient_049", "Patient_050", "Patient_051", "Patient_052", "Patient_053", "Patient_054",
+           "Patient_055", "Patient_056", "Patient_057", "Patient_058", "Patient_059", "Patient_060",
+           "Patient_061", "Patient_062", "Patient_063", "Patient_064", "Patient_065", "Patient_066",
+           "Patient_067", "Patient_068", "Patient_069", "Patient_070", "Patient_071", "Patient_072",
+           "Patient_073", "Patient_074", "Patient_075", "Patient_076", "Patient_077", "Patient_078",
+           "Patient_079", "Patient_080", "Patient_081", "Patient_082", "Patient_083", "Patient_084",
+           "Patient_085", "Patient_086", "Patient_087", "Patient_088", "Patient_089", "Patient_090",
+           "Patient_091", "Patient_092", "Patient_093", "Patient_094", "Patient_095", "Patient_096",
+           "Patient_097", "Patient_098", "Patient_099", "Patient_100"],
+    columns=["Value_X", "Value_Y"]
+)
+
+print("")
+print("###############################################################################################################")
+print("########## Test Data (TestData) ##########")
+print(TestData)
+
+print("")
+print("###############################################################################################################")
+print("########## Linior Regression Analysis Results by R (Coefficients_Line) ##########")
+L_0 = ["(Intercept)                                     ",   "0.7280",     "0.2535",   "2.871",  "0.00501", "**" ]
+L_1 = ["poly(TestData$Value_X, degree = 1, raw = TRUE)  ",   "0.8313",     "0.1090",   "7.629", "1.56e-11", "***"]
+Coefficients_Line = pd.DataFrame(
+    [L_0, L_1],
+    index=["L_0", "L_1"],
+    columns=["Coefficients", "Estimate", "Std. Error", "t value", "Pr(>|t|)", "Significance"])
+print(Coefficients_Line)
+
+print("")
+print("###############################################################################################################")
+print("########## Polynomial Regression Analysis Results by R (Coefficients_Curve) ##########")
+C_0 = ["(Intercept)                                     ",  "2.14594",    "0.17485",  "12.273",  "< 2e-16", "***"]
+C_1 = ["poly(TestData$Value_X, degree = 4, raw = TRUE) 1", "-0.54052",    "0.59336", " -0.911", "0.364629", "   "]
+C_2 = ["poly(TestData$Value_X, degree = 4, raw = TRUE) 2",  "0.49655",    "0.59306",   "0.837", "0.404539", "   "]
+C_3 = ["poly(TestData$Value_X, degree = 4, raw = TRUE) 3", "-0.42523",    "0.22004",  "-1.933", "0.056275", ".  "]
+C_4 = ["poly(TestData$Value_X, degree = 4, raw = TRUE) 4",  "0.10680",    "0.02702",   "3.952", "0.000149", "***"]
+Coefficients_Curve = pd.DataFrame(
+    [C_0, C_1, C_2, C_3, C_4],
+    index=["C_0", "C_1", "C_2", "C_3", "C_4"],
+    columns=["Coefficients", "Estimate", "Std. Error", "t value", "Pr(>|t|)", "Significance"])
+print(Coefficients_Curve)
+
 ########################################################################################################################
 # Figures
 ########################################################################################################################
 Figure_object = plt.figure(1, figsize=(11.69, 8.27), dpi=400, edgecolor="black", linewidth=0.5)
-#plt.subplots_adjust(left=None, bottom=None, right=None, top=None, wspace=None, hspace=None)
-plt.subplots_adjust(left=0.125 ,bottom=0.11 ,right=0.9 ,top=0.88 ,wspace=0.2 ,hspace=0.2)
+plt.subplots_adjust(left=0.125, bottom=0.11, right=0.9, top=0.88, wspace=0.2, hspace=0.2)
 
-plt.figtext(0.0440, 0.9700, "a", horizontalalignment='center', fontsize=13.0549, fontweight="bold", color="black")
-#plt.figtext(0.3750, 0.9700, "b", horizontalalignment='center', fontsize=13.0549, fontweight="bold", color="black")
+#plt.subplots_adjust(left=None, bottom=None, right=None, top=None, wspace=0.3, hspace=None)
+#gs_master = matplotlib.gridspec.GridSpec(nrows=2, ncols=3)
 
-plt.figtext(0.4100, 0.9250, "b", horizontalalignment='center', fontsize=13.0549, fontweight="bold", color="black")
-plt.figtext(0.6700, 0.9250, "c", horizontalalignment='center', fontsize=13.0549, fontweight="bold", color="black")
+plt.figtext(0.0300, 0.9700, "a", horizontalalignment='center', fontsize=13.0549, fontweight="bold", color="black")
+plt.figtext(0.3333+0.02, 0.9700, "b", horizontalalignment='center', fontsize=13.0549, fontweight="bold", color="black")
+plt.figtext(0.6666+0.02, 0.9700, "c", horizontalalignment='center', fontsize=13.0549, fontweight="bold", color="black")
 
-plt.figtext(0.0440, 0.6000, "d", horizontalalignment='center', fontsize=13.0549, fontweight="bold", color="black")
-plt.figtext(0.5000, 0.6000, "e", horizontalalignment='center', fontsize=13.0549, fontweight="bold", color="black")
-plt.figtext(0.7500, 0.6000, "f", horizontalalignment='center', fontsize=13.0549, fontweight="bold", color="black")
-plt.figtext(0.5000, 0.3000, "g", horizontalalignment='center', fontsize=13.0549, fontweight="bold", color="black")
-plt.figtext(0.7560, 0.3000, "h", horizontalalignment='center', fontsize=13.0549, fontweight="bold", color="black")
+plt.figtext(0.0300, 0.4750, "d", horizontalalignment='center', fontsize=13.0549, fontweight="bold", color="black")
+plt.figtext(0.3333+0.02, 0.4750, "e", horizontalalignment='center', fontsize=13.0549, fontweight="bold", color="black")
+plt.figtext(0.6666+0.02, 0.4750, "f", horizontalalignment='center', fontsize=13.0549, fontweight="bold", color="black")
 
-gs_master = matplotlib.gridspec.GridSpec(nrows=2, ncols=1, height_ratios=[1.0, 1.6])
-gs_1 = matplotlib.gridspec.GridSpecFromSubplotSpec(
-    nrows=1, ncols=2, subplot_spec=gs_master[0],  width_ratios=[1.0, 2.0])
+Axes_Outer_A = Figure_object.add_subplot(2, 3, 1)
+Axes_Outer_B = Figure_object.add_subplot(2, 3, 2)
+Axes_Outer_C = Figure_object.add_subplot(2, 3, 3)
+Axes_Outer_D = Figure_object.add_subplot(2, 3, 4)
+Axes_Outer_E = Figure_object.add_subplot(2, 3, 5)
+Axes_Outer_F = Figure_object.add_subplot(2, 3, 6)
 
+Axes_Outer_A.set_position([0.0128315, 0.513352, 0.316225, 0.423053])
+Axes_Outer_B.set_position([0.341888, 0.513352, 0.316225, 0.423053])
+Axes_Outer_C.set_position([0.670944, 0.513352, 0.316225, 0.423053])
+Axes_Outer_D.set_position([0.0128315, 0.0181378, 0.316225, 0.423053])
+Axes_Outer_E.set_position([0.341888, 0.0181378, 0.316225, 0.423053])
+Axes_Outer_F.set_position([0.670944, 0.0181378, 0.316225, 0.423053])
 
-gs_2 = matplotlib.gridspec.GridSpecFromSubplotSpec(nrows=1, ncols=2, subplot_spec=gs_master[1], width_ratios=[1.0, 1.0])
-gs_2_1 = matplotlib.gridspec.GridSpecFromSubplotSpec(nrows=2, ncols=1, subplot_spec=gs_2[1])
-gs_2_1_1 = matplotlib.gridspec.GridSpecFromSubplotSpec(nrows=1, ncols=2, subplot_spec=gs_2_1[0])
-gs_2_1_2 = matplotlib.gridspec.GridSpecFromSubplotSpec(nrows=1, ncols=2, subplot_spec=gs_2_1[1])
+#Axes_Outer_A = Figure_object.add_subplot(gs_master[0])
+#Axes_Outer_B = Figure_object.add_subplot(gs_master[1])
+#Axes_Outer_C = Figure_object.add_subplot(gs_master[2])
+#Axes_Outer_D = Figure_object.add_subplot(gs_master[3])
+#Axes_Outer_E = Figure_object.add_subplot(gs_master[4])
+#Axes_Outer_F = Figure_object.add_subplot(gs_master[5])
 
-#Axes_obj_01 = Figure_object.add_subplot(gs_1[0], xticks=[], yticks=[])
-#Axes_Outer = Figure_object.add_subplot(gs_1[1])
-#Axes_obj_02 = mpl_inset.inset_axes(Axes_Outer, width="72.5%", height="72.5%", bbox_to_anchor=(0.0, 0.0, 0.5, 1.0), bbox_transform=Axes_Outer.transAxes, loc="center", borderpad=1)
-#Axes_obj_03 = mpl_inset.inset_axes(Axes_Outer, width="60.0%", height="60.0%", bbox_to_anchor=(0.5, 0.0-0.025, 0.5, 1.0+0.11), bbox_transform=Axes_Outer.transAxes, loc="center", borderpad=1)
-#Axes_obj_04 = Figure_object.add_subplot(gs_2[0], xticks=[0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5], yticks=[0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5])
-#Axes_obj_05 = Figure_object.add_subplot(gs_2_1_1[0], xticks=[0, 1.0, 2.0, 3.0, 4.0], yticks=[0, 1.0, 2.0, 3.0, 4.0])
-#Axes_obj_06 = Figure_object.add_subplot(gs_2_1_1[1], xticks=[-0.2, -0.1, 0.0, 0.1, 0.2], yticks=[-0.5, 0.0, 0.5, 1.0])
-#Axes_obj_07 = Figure_object.add_subplot(gs_2_1_2[0], xticks=[-0.4, -0.2, -0.0, 0.2, 0.4, 0.6], yticks=[-2.0, -1.0, 0.0, 1.0, 2.0, 3.0])
-#Axes_obj_08 = Figure_object.add_subplot(gs_2_1_2[1], xticks=[-1.0, 0.0, 1.0, 2.0], yticks=[-1.0, 0.0, 1.0, 2.0])
+########################################################################################################################
+# Figure (a)
+########################################################################################################################
+Axes_Outer_A.set_title("Guo et al. JAMA Cardiol. 2020\nCOVID-19 (Wuhan, China)", size=11.4230, fontweight="normal")
+Axes_Outer_A.tick_params(length=0.0)
+Axes_Outer_A.set_xticklabels([])
+Axes_Outer_A.set_yticklabels([])
+#----------------------------------------------------------------------------------------------------------------------#
+Axes_obj_01 = mpl_inset.inset_axes(Axes_Outer_A, width="175.0%", height="175.0%",
+                                   bbox_to_anchor=(0.2500, 0.400, 0.5, 0.5),
+                                   bbox_transform=Axes_Outer_A.transAxes, loc="center", borderpad=1)
+Axes_obj_01.tick_params(length=0.0); Axes_obj_01.set_xticklabels([]); Axes_obj_01.set_yticklabels([])
+Axes_obj_01.imshow(plt.imread("Guo_2020_Fig1B.png"))
+Axes_obj_01.annotate(
+    text='\n'.join(["Total patients: 187"]),
+    xy=(280, 50), xytext=(280, 50), ha='center', va='center', size=14.5, color="red",
+    bbox=dict(boxstyle='round', edgecolor='red', fc='white'), fontweight="normal", zorder=10,
+)
+#----------------------------------------------------------------------------------------------------------------------#
+Axes_obj_02 = mpl_inset.inset_axes(Axes_Outer_A, width="80.00%", height="45.00%",
+                                   bbox_to_anchor=(0.0+0.025, -0.125, 0.5, 0.5),
+                                   bbox_transform=Axes_Outer_A.transAxes, loc="center", borderpad=1)
+Axes_obj_02.set_title("Over 100 Points?", fontweight="normal")
+Axes_obj_02.tick_params(length=0.0); Axes_obj_02.set_xticklabels([]); Axes_obj_02.set_yticklabels([])
 
-Axes_obj_01 = plt.axes([0.0657384+0.014, 0.644572, 0.288834, 0.298807], xticks=[], yticks=[])
-Axes_Outer = plt.axes([0.408069-0.033+0.014, 0.631884, 0.577669, 0.324182])
-Axes_obj_02 = mpl_inset.inset_axes(Axes_Outer, width="72.5%", height="72.5%", bbox_to_anchor=(0.0, 0.0, 0.5, 1.0), bbox_transform=Axes_Outer.transAxes, loc="center", borderpad=1)
-Axes_obj_03 = mpl_inset.inset_axes(Axes_Outer, width="60.0%", height="60.0%", bbox_to_anchor=(0.5, 0.0-0.025, 0.5, 1.0+0.11), bbox_transform=Axes_Outer.transAxes, loc="center", borderpad=1)
-Axes_obj_04 = plt.axes([0.0657384+0.014, 0.0692597, 0.366944, 0.518691], xticks=[0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5], yticks=[0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5])
-Axes_obj_05 = plt.axes([0.552487-0.033*1.5+0.014, 0.341454+0.01, 0.196933, 0.246497*(9.5/10)], xticks=[0, 1.0, 2.0, 3.0, 4.0], yticks=[0, 1.0, 2.0, 3.0, 4.0])
-Axes_obj_06 = plt.axes([0.788806-0.033+0.014, 0.341454+0.01, 0.196933, 0.246497*(9.5/10)], xticks=[-0.2, -0.1, 0.0, 0.1, 0.2], yticks=[-0.5, 0.0, 0.5, 1.0])
-Axes_obj_07 = plt.axes([0.552487-0.033*1.5+0.014, 0.0692597*(2/3), 0.196933, 0.246497*(9.5/10)], xticks=[-0.4, -0.2, -0.0, 0.2, 0.4, 0.6], yticks=[-2.0, -1.0, 0.0, 1.0, 2.0, 3.0])
-Axes_obj_08 = plt.axes([0.788806-0.033+0.014, 0.0692597*(2/3), 0.196933, 0.246497*(9.5/10)], xticks=[-1.0, 0.0, 1.0, 2.0], yticks=[-1.0, 0.0, 1.0, 2.0])
+img = Image.open("Guo_2020_Fig1B_origin.png")
+img_resize = img.resize(size=(125, 70))#size in pixels, as a 2-tuple: (width, height)
+img_resize.save("Guo_2020_Fig1B_origin_resized.png")
+Axes_obj_02.imshow(plt.imread("Guo_2020_Fig1B_origin_resized.png"), interpolation='none', aspect='auto', cmap="gray")
+#----------------------------------------------------------------------------------------------------------------------#
+Axes_obj_03 = mpl_inset.inset_axes(Axes_Outer_A, width="80.00%", height="45.00%",
+                                   bbox_to_anchor=(0.5-0.025, -0.125, 0.5, 0.5),
+                                   bbox_transform=Axes_Outer_A.transAxes, loc="center", borderpad=1)
+Axes_obj_03.set_title("Significance??", fontweight="normal")
+Axes_obj_03.tick_params(length=0.0); Axes_obj_03.set_xticklabels([]); Axes_obj_03.set_yticklabels([])
+Axes_obj_03.imshow(plt.imread("Guo_2020_Fig1B_P_value_cut.png"), interpolation='none', aspect='auto')
 
-############################################################################################################
-# (a) Guo et al. 2020
-############################################################################################################
-Axes_obj_01.set_title("Guo et al. 2020 (Fig. 1B)", size=11.4230, fontweight="normal")
-#Axes_obj_01.yaxis.set_visible(False)
-#Axes_obj_01.xaxis.set_visible(False)
-Axes_obj_01.tick_params(length=0.0)
-Axes_obj_01.set_xticklabels([])
-Axes_obj_01.set_yticklabels([])
-#Axes_obj_01.set_ylabel("Plasma NT-proBNP, μg/mL")
-#Axes_obj_01.set_xlabel("Plasma TnT, ng/mL")
-Axes_obj_01.imshow(img_01)
+########################################################################################################################
+# Figure (b)
+########################################################################################################################
+Axes_Outer_B.set_title("Marginal Dist. for Guo et al.\nCOVID-19 (same as on the left)", size=11.4230, fontweight="normal")
+Axes_Outer_B.tick_params(length=0.0)
+Axes_Outer_B.set_xticklabels([])
+Axes_Outer_B.set_yticklabels([])
+#----------------------------------------------------------------------------------------------------------------------#
+Axes_obj_04 = mpl_inset.inset_axes(Axes_Outer_B, width="130.0%", height="125.0%",
+                                   bbox_to_anchor=(0.4000, 0.4100, 0.5, 0.5),
+                                   bbox_transform=Axes_Outer_B.transAxes, loc="center", borderpad=1)
+Axes_obj_04.set_xticklabels([]); Axes_obj_04.set_yticklabels([])
+Axes_obj_04.set_xlim(-0.125, 2.625)
+Axes_obj_04.set_ylim(-0.125, 4.125)
+Axes_obj_04.xaxis.set_minor_locator(ticker.MultipleLocator(0.5))
+Axes_obj_04.yaxis.set_minor_locator(ticker.MultipleLocator(0.5))
 
-############################################################################################################
-# (b) & (c)
-############################################################################################################
-Axes_Outer.set_title("Parabola in the Other Research (Sugawa et al. 2018 Figure 1)", size=11.4230,  fontweight="normal")
-Axes_Outer.tick_params(length=0.0)
-Axes_Outer.set_xticklabels([])
-Axes_Outer.set_yticklabels([])
-
-############################################################################################################
-# (b) Sugawa et al. 2018
-############################################################################################################
-Axes_obj_02.set_title("Sugawa et al. 2018", size=11.4230,  fontweight="normal")
-#Axes_obj_02.yaxis.set_visible(False)
-#Axes_obj_02.xaxis.set_visible(False)
-Axes_obj_02.tick_params(length=0.0)
-Axes_obj_02.set_xticklabels([])
-Axes_obj_02.set_yticklabels([])
-Axes_obj_02.set_ylabel("Cardiac Tropnin I (pg/mL)")
-Axes_obj_02.set_xlabel("BNP (pg/mL)")
-Axes_obj_02.imshow(img_02)
-############################################################################################################
-# (c) Add parabola Sugawa et al. 2018
-############################################################################################################
-Axes_obj_03.set_title("Parabola in b", size=11.4230,  fontweight="normal")
-Axes_obj_03.set_ylabel("Cardiac Troponin I (pg/mL)")
-Axes_obj_03.set_xlabel("BNP (pg/mL)")
-Axes_obj_03.set_xlim(-5.0,  145)
-Axes_obj_03.set_ylim(-5.0, 225)
-Axes_obj_03.set_xticks([0, 40, 80, 120])
-Axes_obj_03.set_yticks([0, 50, 100, 150, 200, 250])
-Axes_obj_03.set_xticklabels=[0, 40, 80, 120]
-Axes_obj_03.set_yticklabels=[0, 50, 100, 150, 200, 250]
-#Axes_obj_03.set_xticks([0, 20, 40, 60, 80, 100, 120, 140])
-#Axes_obj_03.set_yticks([0, 50, 100, 150, 200, 250])
-#Axes_obj_03.set_xticklabels=[0, 20, 40, 60, 80, 100, 120, 140]
-#Axes_obj_03.set_yticklabels=[0, 50, 100, 150, 200, 250]
-
-Axes_obj_03.hlines(y=26.2, xmin=0.0, xmax=140, color="red", linestyle="dashed", linewidth=1.0)
-
-Axes_obj_03.plot([0.0, 125.460040327514], [0.090*0.0+2.386, 0.090*125.460040327514+2.386],
-                 color="black", linestyle="solid", linewidth=1.0)
-
-Axes_obj_03.scatter(PatientDataSet_S["X(BNP)"], PatientDataSet_S["Y(TnT)"],
-                    color="blue", marker="o", s=12, zorder=10)
-
-B_1 = ParabolaRDataSet.at["Sugawa", "y^2"]
-B_2 = ParabolaRDataSet.at["Sugawa", "x*y"]
-B_3 = ParabolaRDataSet.at["Sugawa", "y"]
-B_4 = ParabolaRDataSet.at["Sugawa", "x^2"]
-B_5 = ParabolaRDataSet.at["Sugawa", "x"]
-B_6 = ParabolaRDataSet.at["Sugawa", "c"]
-x1 = np.arange(0, ParabolaRDataSet.at["Sugawa", "Sx"], 1.0*(10**(-2)))
-x2 = np.arange(0, ParabolaRDataSet.at["Sugawa", "Ex"], 1.0*(10**(-2)))
-y1 = (np.sqrt((B_2**2-4*B_1*B_4)*x1**2+(2*B_2*B_3-4*B_1*B_5)*x1-4*B_1*B_6+B_3**2)-B_2*x1-B_3)/(2*B_1)
-y2 = -(np.sqrt((B_2**2-4*B_1*B_4)*x2**2+(2*B_2*B_3-4*B_1*B_5)*x2-4*B_1*B_6+B_3**2)+B_2*x2+B_3)/(2*B_1)
-Axes_obj_03.plot(x1, y1, color="red", linestyle="dashed", linewidth=1.0)
-Axes_obj_03.plot(x2, y2, color="red", linestyle="dashed", linewidth=1.0)
-
-Axes_obj_03.quiver(0.0, 26.2, max(PatientDataSet_S["X(BNP)"]), 132.55000000000004,
-                   scale_units='xy', angles='xy', scale=1, color="red", width=0.008)
-
-############################################################################################################
-# (d) Re-analysis
-############################################################################################################
-Axes_obj_04.set_title("Re-analysis Guo et al. 2020 (Fig. 1B)", size=11.4230, fontweight="normal")
-Axes_obj_04.set_ylabel("Plasma NT-proBNP,  ×10 μg/mL", fontweight="normal")
-Axes_obj_04.set_xlabel("Plasma Troponin T,  ng/mL", fontweight="normal")
-Axes_obj_04.set_xlim(-0.25, 4.75)
-Axes_obj_04.set_ylim(-0.25, 4.75)
-Axes_obj_04.set_xticks = [0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5]
-Axes_obj_04.set_yticks = [0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5]
-Axes_obj_04.set_aspect(aspect=1)
-
-for i in range(0, 10):
-    Axes_obj_04.vlines(x=0.0+0.5*i, ymin=0.0, ymax=4.5, color="gray", linestyle="dotted", linewidth=0.5)
-    Axes_obj_04.hlines(y=0.0+0.5*i, xmin=0.0, xmax=4.5, color="gray", linestyle="dotted", linewidth=0.5)
-
-x = np.arange(0, 4.38, 1.0*(10**(-3)))
-y = CenterOfGravityDataSet.at["G1", "a1"]*x + CenterOfGravityDataSet.at["G1", "b1"]
-Axes_obj_04.plot(x, y, color="black", linestyle="solid", linewidth=0.5, zorder=0)
-
-x = np.arange(0, 4.38, 1.0*(10**(-3)))
-y = CenterOfGravityDataSet.at["G2", "a1"]*x + CenterOfGravityDataSet.at["G2", "b1"]
-Axes_obj_04.plot(x, y, color="black", linestyle="solid", linewidth=0.5, zorder=0)
-
-x = np.arange(0, 4.38, 1.0*(10**(-3)))
-y = CenterOfGravityDataSet.at["G3", "a1"]*x + CenterOfGravityDataSet.at["G3", "b1"]
-Axes_obj_04.plot(x, y, color="black", linestyle="solid", linewidth=0.5, zorder=0)
-
-x = np.arange(0, max(PatientDataSet["Plasma TnT"]), 1.0*(10**(-3)))
-y = CenterOfGravityDataSet.at["Guo et al.", "a1"]*x + CenterOfGravityDataSet.at["Guo et al.", "b1"]
-Axes_obj_04.plot(x, y, color="black", linestyle="solid", linewidth=1.5)
-
-Axes_obj_04.quiver(
-    VectorDataSet.at["V1", "Sx"], VectorDataSet.at["V1", "Sy"],
-    VectorDataSet.at["V1", "deltaX"], VectorDataSet.at["V1", "deltaY"],
-    scale_units='xy', angles='xy', scale=1, color="black", width=0.005)
-Axes_obj_04.quiver(
-    VectorDataSet.at["V2", "Sx"], VectorDataSet.at["V2", "Sy"],
-    VectorDataSet.at["V2", "deltaX"], VectorDataSet.at["V2", "deltaY"],
-    scale_units='xy', angles='xy', scale=1, color="black", width=0.005)
-Axes_obj_04.quiver(
-    VectorDataSet.at["V3", "Sx"], VectorDataSet.at["V3", "Sy"],
-    VectorDataSet.at["V3", "deltaX"], VectorDataSet.at["V3", "deltaY"],
-    scale_units='xy', angles='xy', scale=1, color="black", width=0.005)
-Axes_obj_04.quiver(
-    VectorDataSet.at["V4", "Sx"], VectorDataSet.at["V4", "Sy"],
-    VectorDataSet.at["V4", "deltaX"], VectorDataSet.at["V4", "deltaY"],
-    scale_units='xy', angles='xy', scale=1, color="black", width=0.005)
-Axes_obj_04.quiver(
-    VectorDataSet.at["V5", "Sx"], VectorDataSet.at["V5", "Sy"],
-    VectorDataSet.at["V5", "deltaX"], VectorDataSet.at["V5", "deltaY"],
-    scale_units='xy', angles='xy', scale=1, color="black", width=0.005)
-
-Axes_obj_04.plot(np.arange(0, 4.38, 1.0*(10**(-5))), np.sqrt(4.38**2-(np.arange(0, 4.38, 1.0*(10**(-5))))**2),
-                 color="black", linestyle="solid", linewidth=0.5)
-
-Axes_obj_04.text(-0.125, -0.125,
-                 "O", color="black", size=11.4230, horizontalalignment="center", verticalalignment="center")
-Axes_obj_04.text(VectorDataSet.at["V1", "CircleX"]-0.125, VectorDataSet.at["V1", "CircleY"],
-                 "Y", color="black", size=11.4230, horizontalalignment="center", verticalalignment="center")
-Axes_obj_04.text(VectorDataSet.at["V5", "CircleX"], VectorDataSet.at["V5", "CircleY"],
-                 "X", color="black", size=11.4230, horizontalalignment="center", verticalalignment="center")
-
-Axes_obj_04.annotate(text="G2 y-axis", xy=(VectorDataSet.at["V2", "CircleX"]+0.15, VectorDataSet.at["V2", "CircleY"]),
-                     ha='center', va='center', size=10,
-                     bbox=dict(boxstyle='square', edgecolor='red', fc='white'))
-
-Axes_obj_04.annotate(text="G1 y-axis", xy=(VectorDataSet.at["V3", "CircleX"]+0.5, VectorDataSet.at["V3", "CircleY"]),
-                     ha='center', va='center', size=10,
-                     bbox=dict(boxstyle='square', edgecolor='red', fc='white'))
-
-Axes_obj_04.annotate(text="G3 y-axis", xy=(VectorDataSet.at["V4", "CircleX"]+0.3, VectorDataSet.at["V4", "CircleY"]+0.05),
-                     ha='center', va='center', size=10,
-                     bbox=dict(boxstyle='square', edgecolor='red', fc='white'))
-Axes_obj_04.annotate(text="Guo et al.\nRegression Line", xy=(3.0, 2.8),
-                     ha='center', va='center', size=10,
-                     bbox=dict(boxstyle='square', edgecolor='red', fc='white'))
-
-Axes_obj_04.quiver(
-    AxisDataSet.at["G1_P1", "Sx"], AxisDataSet.at["G1_P1", "Sy"],
-    AxisDataSet.at["G1_P1", "deltaX"], AxisDataSet.at["G1_P1", "deltaY"],
-    scale_units='xy', angles='xy', scale=1, color="red", width=0.004)
-Axes_obj_04.quiver(
-    AxisDataSet.at["G1_P2", "Sx"], AxisDataSet.at["G1_P2", "Sy"],
-    AxisDataSet.at["G1_P2", "deltaX"], AxisDataSet.at["G1_P2", "deltaY"],
-    scale_units='xy', angles='xy', scale=1, color="red", width=0.004)
-
-Axes_obj_04.quiver(
-    AxisDataSet.at["G2_P1", "Sx"], AxisDataSet.at["G2_P1", "Sy"],
-    AxisDataSet.at["G2_P1", "deltaX"], AxisDataSet.at["G2_P1", "deltaY"],
-    scale_units='xy', angles='xy', scale=1, color="red", width=0.004)
-Axes_obj_04.quiver(
-    AxisDataSet.at["G2_P2", "Sx"], AxisDataSet.at["G2_P2", "Sy"],
-    AxisDataSet.at["G2_P2", "deltaX"], AxisDataSet.at["G2_P2", "deltaY"],
-    scale_units='xy', angles='xy', scale=1, color="red", width=0.004)
-
-Axes_obj_04.quiver(
-    AxisDataSet.at["G3_P1", "Sx"], AxisDataSet.at["G3_P1", "Sy"],
-    AxisDataSet.at["G3_P1", "deltaX"], AxisDataSet.at["G3_P1", "deltaY"],
-    scale_units='xy', angles='xy', scale=1, color="red", width=0.004)
-Axes_obj_04.quiver(
-    AxisDataSet.at["G3_P2", "Sx"], AxisDataSet.at["G3_P2", "Sy"],
-    AxisDataSet.at["G3_P2", "deltaX"], AxisDataSet.at["G3_P2", "deltaY"],
-    scale_units='xy', angles='xy', scale=1, color="red", width=0.004)
-
-Axes_obj_04.plot(
-    PatientDataSet[PatientDataSet["Frag1"] == 1]["FlameLeftX"],
-    PatientDataSet[PatientDataSet["Frag1"] == 1]["FlameLeftY"],
-    color="red", linestyle="solid", linewidth=0.5)
-Axes_obj_04.plot(
-    PatientDataSet[PatientDataSet["Frag1"] == 1]["FlameRightX"],
-    PatientDataSet[PatientDataSet["Frag1"] == 1]["FlameRightY"],
-    color="red", linestyle="solid", linewidth=0.5)
-Axes_obj_04.plot(
-    PatientDataSet[PatientDataSet["Frag1"] == 1]["FlameUpperX"],
-    PatientDataSet[PatientDataSet["Frag1"] == 1]["FlameUpperY"],
-    color="red", linestyle="solid", linewidth=0.5)
-Axes_obj_04.plot(
-    PatientDataSet[PatientDataSet["Frag1"] == 1]["FlameLowewX"],
-    PatientDataSet[PatientDataSet["Frag1"] == 1]["FlameLowewY"],
-    color="red", linestyle="solid", linewidth=0.5)
-
-Axes_obj_04.plot(
-    PatientDataSet[PatientDataSet["Frag1"] == 2]["FlameLeftX"],
-    PatientDataSet[PatientDataSet["Frag1"] == 2]["FlameLeftY"],
-    color="red", linestyle="solid", linewidth=0.5)
-Axes_obj_04.plot(
-    PatientDataSet[PatientDataSet["Frag1"] == 2]["FlameRightX"],
-    PatientDataSet[PatientDataSet["Frag1"] == 2]["FlameRightY"],
-    color="red", linestyle="solid", linewidth=0.5)
-Axes_obj_04.plot(
-    PatientDataSet[PatientDataSet["Frag1"] == 2]["FlameUpperX"],
-    PatientDataSet[PatientDataSet["Frag1"] == 2]["FlameUpperY"],
-    color="red", linestyle="solid", linewidth=0.5)
-Axes_obj_04.plot(
-    PatientDataSet[PatientDataSet["Frag1"] == 2]["FlameLowewX"],
-    PatientDataSet[PatientDataSet["Frag1"] == 2]["FlameLowewY"],
-    color="red", linestyle="solid", linewidth=0.5)
-
-Axes_obj_04.plot(
-    PatientDataSet[(PatientDataSet["Frag1"] == 3) | (PatientDataSet["Frag1"] == 4)]["FlameLeftX"],
-    PatientDataSet[(PatientDataSet["Frag1"] == 3) | (PatientDataSet["Frag1"] == 4)]["FlameLeftY"],
-    color="red", linestyle="solid", linewidth=0.5)
-Axes_obj_04.plot(
-    PatientDataSet[(PatientDataSet["Frag1"] == 3) | (PatientDataSet["Frag1"] == 4)]["FlameRightX"],
-    PatientDataSet[(PatientDataSet["Frag1"] == 3) | (PatientDataSet["Frag1"] == 4)]["FlameRightY"],
-    color="red", linestyle="solid", linewidth=0.5)
-Axes_obj_04.plot(
-    PatientDataSet[(PatientDataSet["Frag1"] == 3) | (PatientDataSet["Frag1"] == 4)]["FlameUpperX"],
-    PatientDataSet[(PatientDataSet["Frag1"] == 3) | (PatientDataSet["Frag1"] == 4)]["FlameUpperY"],
-    color="red", linestyle="solid", linewidth=0.5)
-Axes_obj_04.plot(
-    PatientDataSet[(PatientDataSet["Frag1"] == 3) | (PatientDataSet["Frag1"] == 4)]["FlameLowewX"],
-    PatientDataSet[(PatientDataSet["Frag1"] == 3) | (PatientDataSet["Frag1"] == 4)]["FlameLowewY"],
-    color="red", linestyle="solid", linewidth=0.5)
-
-TempData1 = PatientDataSet[PatientDataSet["Frag1"] == 1]
-TempData2 = PatientDataSet[PatientDataSet["Frag1"] == 2]
-TempData3 = PatientDataSet[(PatientDataSet["Frag1"] == 3) | (PatientDataSet["Frag1"] == 4)]
-
-#for i in range(0, len(TempData1)):
-#    Axes_obj_04.plot([CenterOfGravityDataSet.at["G1", "MeanX"], TempData1.iat[i, 2]],
-#                     [CenterOfGravityDataSet.at["G1", "MeanY"], TempData1.iat[i, 3]],
-#                     color="red", linestyle="dashed", linewidth=0.5)
-#for i in range(0, len(TempData2)):
-#    Axes_obj_04.plot([CenterOfGravityDataSet.at["G2", "MeanX"], TempData2.iat[i, 2]],
-#                     [CenterOfGravityDataSet.at["G2", "MeanY"], TempData2.iat[i, 3]],
-#                     color="red", linestyle="dashed", linewidth=0.5)
-#for i in range(0, len(TempData3)):
-#    Axes_obj_04.plot([CenterOfGravityDataSet.at["G3", "MeanX"], TempData3.iat[i, 2]],
-#                     [CenterOfGravityDataSet.at["G3", "MeanY"], TempData3.iat[i, 3]],
-#                     color="red", linestyle="dashed", linewidth=0.5)
-
-Axes_obj_04.scatter(
-    [CenterOfGravityDataSet.at["G1", "MeanX"],
-     CenterOfGravityDataSet.at["G2", "MeanX"],
-     CenterOfGravityDataSet.at["G3", "MeanX"]],
-    [CenterOfGravityDataSet.at["G1", "MeanY"],
-     CenterOfGravityDataSet.at["G2", "MeanY"],
-     CenterOfGravityDataSet.at["G3", "MeanY"]],
-        color="red", marker="o", s=18, zorder=9)
+for i in range(0, 9):
+    Axes_obj_04.hlines(y=0.0+0.5*i, xmin=0.0, xmax=2.5, color="gray", linestyle="dotted", linewidth=0.5)
+for i in range(0, 6):
+    Axes_obj_04.vlines(x=0.0+0.5*i, ymin=0.0, ymax=4.0, color="gray", linestyle="dotted", linewidth=0.5)
 
 Axes_obj_04.scatter(PatientDataSet["Plasma TnT"], PatientDataSet["Plasma NT-proBNP"],
                     color="black", marker="s", s=20, zorder=9)
 
-##################################################
-B_1 = ParabolaRDataSet.at["G1", "y^2"]
-B_2 = ParabolaRDataSet.at["G1", "x*y"]
-B_3 = ParabolaRDataSet.at["G1", "y"]
-B_4 = ParabolaRDataSet.at["G1", "x^2"]
-B_5 = ParabolaRDataSet.at["G1", "x"]
-B_6 = ParabolaRDataSet.at["G1", "c"]
-x1 = np.arange(0.041750, ParabolaRDataSet.at["G1", "Sx"], 1.0*(10**(-3)))
-x2 = np.arange(0.041750, ParabolaRDataSet.at["G1", "Ex"], 1.0*(10**(-3)))
+x = np.arange(0, max(PatientDataSet["Plasma TnT"]), 1.0*(10**(-3)))
+y = CenterOfGravityDataSet.at["Guo et al.", "a1"]*x + CenterOfGravityDataSet.at["Guo et al.", "b1"]
+
+Axes_obj_04.plot(x, y, color="black", linestyle="solid", linewidth=1.5)
+
+Axes_obj_04.vlines(x=0.5, ymin=-0.125, ymax=4.125, color="red", linestyle='dashed', linewidth=1.5)
+Axes_obj_04.hlines(y=1.125, xmin=-0.125, xmax=0.5, color="red", linestyle='dashed', linewidth=1.5)
+
+x = np.arange(0.55, 2.0, 1.0*(10**(-3)))
+y = CenterOfGravityDataSet.at["Guo et al.", "a1"]*x + 1.45
+
+xu = np.arange(0.55, 2.0, 1.0*(10**(-3)))
+yu = CenterOfGravityDataSet.at["Guo et al.", "a1"]*x + 1.30
+#Axes_obj_05.plot(xu, yu, color="blue", linestyle="dashed", linewidth=1.5)
+xu1 = min(xu); xu2 = max(xu); yu1 = min(yu); yu2 = max(yu)
+
+xl = np.arange(1.05, 2.5, 1.0*(10**(-3)))
+yl = CenterOfGravityDataSet.at["Guo et al.", "a1"]*x - 0.85
+#Axes_obj_05.plot(xl, yl, color="blue", linestyle="dashed", linewidth=1.5)
+xl1 = min(xl); xl2 = max(xl); yl1 = min(yl); yl2 = max(yl)
+
+B_1 = ParabolaRDataSet3.at["G3", "y^2"]
+B_2 = ParabolaRDataSet3.at["G3", "x*y"]
+B_3 = ParabolaRDataSet3.at["G3", "y"]
+B_4 = ParabolaRDataSet3.at["G3", "x^2"]
+B_5 = ParabolaRDataSet3.at["G3", "x"]
+B_6 = ParabolaRDataSet3.at["G3", "c"]
+x1 = np.arange(0.898070, 1.025, 1.0*(10**(-3)))
+x2 = np.arange(0.898070, 2.10, 1.0*(10**(-3)))
+
 y1 = (np.sqrt((B_2**2-4*B_1*B_4)*x1**2+(2*B_2*B_3-4*B_1*B_5)*x1-4*B_1*B_6+B_3**2)-B_2*x1-B_3)/(2*B_1)
 y2 = -(np.sqrt((B_2**2-4*B_1*B_4)*x2**2+(2*B_2*B_3-4*B_1*B_5)*x2-4*B_1*B_6+B_3**2)+B_2*x2+B_3)/(2*B_1)
-Axes_obj_04.plot(x1, y1, color="dodgerblue", linestyle="solid", linewidth=1.6318, zorder=10)
-Axes_obj_04.plot(x2, y2, color="dodgerblue", linestyle="solid", linewidth=1.6318, zorder=10)
+Axes_obj_04.plot(x1, y1, color="blue", linestyle="solid", linewidth=5.0, zorder=7)
+Axes_obj_04.plot(x2, y2, color="blue", linestyle="solid", linewidth=5.0, zorder=7)
 
-B_1 = ParabolaRDataSet.at["G2", "y^2"]
-B_2 = ParabolaRDataSet.at["G2", "x*y"]
-B_3 = ParabolaRDataSet.at["G2", "y"]
-B_4 = ParabolaRDataSet.at["G2", "x^2"]
-B_5 = ParabolaRDataSet.at["G2", "x"]
-B_6 = ParabolaRDataSet.at["G2", "c"]
-x1 = np.arange(0.127630, ParabolaRDataSet.at["G2", "Sx"], 1.0*(10**(-3)))
-x2 = np.arange(0.127630, ParabolaRDataSet.at["G2", "Ex"], 1.0*(10**(-3)))
-y1 = (np.sqrt((B_2**2-4*B_1*B_4)*x1**2+(2*B_2*B_3-4*B_1*B_5)*x1-4*B_1*B_6+B_3**2)-B_2*x1-B_3)/(2*B_1)
-y2 = -(np.sqrt((B_2**2-4*B_1*B_4)*x2**2+(2*B_2*B_3-4*B_1*B_5)*x2-4*B_1*B_6+B_3**2)+B_2*x2+B_3)/(2*B_1)
-Axes_obj_04.plot(x1, y1, color="dodgerblue", linestyle="solid", linewidth=1.6318)
-Axes_obj_04.plot(x2, y2, color="dodgerblue", linestyle="solid", linewidth=1.6318)
+Axes_obj_04.annotate(
+    text='\n'.join(["cf. Budnik et al.", "    Int J Cardiol.", "    2016 15; 219"]),
+    xy=(1.675, 3.25), xytext=(1.675, 3.25), ha='center', va='center', size=11.0, color="blue",
+    bbox=dict(boxstyle='round', edgecolor='blue', fc='white'), fontweight="normal"
+)
 
-B_1 = ParabolaRDataSet.at["G3", "y^2"]
-B_2 = ParabolaRDataSet.at["G3", "x*y"]
-B_3 = ParabolaRDataSet.at["G3", "y"]
-B_4 = ParabolaRDataSet.at["G3", "x^2"]
-B_5 = ParabolaRDataSet.at["G3", "x"]
-B_6 = ParabolaRDataSet.at["G3", "c"]
-x1 = np.arange(0.898070, 1.15, 1.0*(10**(-3)))
-x2 = np.arange(0.898070, 2.80, 1.0*(10**(-3)))
-y1 = (np.sqrt((B_2**2-4*B_1*B_4)*x1**2+(2*B_2*B_3-4*B_1*B_5)*x1-4*B_1*B_6+B_3**2)-B_2*x1-B_3)/(2*B_1)
-y2 = -(np.sqrt((B_2**2-4*B_1*B_4)*x2**2+(2*B_2*B_3-4*B_1*B_5)*x2-4*B_1*B_6+B_3**2)+B_2*x2+B_3)/(2*B_1)
-Axes_obj_04.plot(x1, y1, color="dodgerblue", linestyle="solid", linewidth=1.6318)
-Axes_obj_04.plot(x2, y2, color="dodgerblue", linestyle="solid", linewidth=1.6318)
+Axes_obj_04.annotate(
+    text='\n'.join(["A(1)"]),
+    xy=(0.2, 0.5), xytext=(0.2, 0.5), ha='center', va='center', size=10, color="red",
+    bbox=dict(boxstyle='round', edgecolor='red', fc='white'), fontweight="normal", zorder=10,
+)
 
-############################################################################################################
-# (e) Transpose Axis
-############################################################################################################
-Axes_obj_05.set_title("Transpose Axis", size=11.4230,  fontweight="normal")
-#Axes_obj_05.set_xlabel("NT-proBNP, ×10 μg/mL")
-Axes_obj_05.set_ylabel("Plasma Troponin T, ng/mL")
-Axes_obj_05.set_xlim(-0.25, 4.75)
-Axes_obj_05.set_ylim(-0.25, 4.75)
-#Axes_obj_05.xaxis.set_major_locator(ticker.MultipleLocator(1.0))
-Axes_obj_05.xaxis.set_minor_locator(ticker.MultipleLocator(0.5))
-Axes_obj_05.set_xticklabels([0.0, 1.0, 2.0, 3.0, 4.0])
-#Axes_obj_05.yaxis.set_major_locator(ticker.MultipleLocator(1.0))
-Axes_obj_05.yaxis.set_minor_locator(ticker.MultipleLocator(0.5))
-Axes_obj_05.set_yticklabels([0.0, 1.0, 2.0, 3.0, 4.0])
+Axes_obj_04.annotate(
+    text='\n'.join(["A(2)"]),
+    xy=(0.2, 2.0), xytext=(0.2, 2.0), ha='center', va='center', size=10, color="red",
+    bbox=dict(boxstyle='round', edgecolor='red', fc='white'), fontweight="normal", zorder=10,
+)
 
-for i in range(0, 10):
-    Axes_obj_05.vlines(x=0.0+0.5*i, ymin=0.0, ymax=4.5, color="gray", linestyle="dotted", linewidth=0.5)
-    Axes_obj_05.hlines(y=0.0+0.5*i, xmin=0.0, xmax=4.5, color="gray", linestyle="dotted", linewidth=0.5)
+Axes_obj_04.fill_between(np.linspace(-0.125, 0.5, 1000), -0.125*np.ones(1000), 4.125*np.ones(1000),
+                         facecolor='red', alpha=0.1)
 
-Axes_obj_05.scatter(PatientDataSet["Plasma NT-proBNP"], PatientDataSet["Plasma TnT"],
-                    color="black", marker="s", s=12, zorder=9)
+x1 = np.arange(29/50, 1.3836, 1.0*(10**(-3)))
+x2 = np.arange(29/50, 62/25, 1.0*(10**(-3)))
+x3 = np.arange(-(6*np.sqrt(152886985058)-5890213)/2909614, 1.3836, 1.0*(10**(-3)))
+x4 = np.arange(-(6*np.sqrt(152886985058)-5890213)/2909614, 2.44602, 1.0*(10**(-3)))
+x5 = np.arange(2.44602, 62/25, 1.0*(10**(-3)))
 
-B_1 = ParabolaRDataSet.at["G1", "y^2"]
-B_2 = ParabolaRDataSet.at["G1", "x*y"]
-B_3 = ParabolaRDataSet.at["G1", "y"]
-B_4 = ParabolaRDataSet.at["G1", "x^2"]
-B_5 = ParabolaRDataSet.at["G1", "x"]
-B_6 = ParabolaRDataSet.at["G1", "c"]
-x1 = np.arange(0.041750, ParabolaRDataSet.at["G1", "Sx"], 1.0*(10**(-3)))
-x2 = np.arange(0.041750, ParabolaRDataSet.at["G1", "Ex"], 1.0*(10**(-3)))
-y1 = (np.sqrt((B_2**2-4*B_1*B_4)*x1**2+(2*B_2*B_3-4*B_1*B_5)*x1-4*B_1*B_6+B_3**2)-B_2*x1-B_3)/(2*B_1)
-y2 = -(np.sqrt((B_2**2-4*B_1*B_4)*x2**2+(2*B_2*B_3-4*B_1*B_5)*x2-4*B_1*B_6+B_3**2)+B_2*x2+B_3)/(2*B_1)
-Axes_obj_05.plot(y1, x1, color="dodgerblue", linestyle="solid", linewidth=1.6318, zorder=9)
-Axes_obj_05.plot(y2, x2, color="dodgerblue", linestyle="solid", linewidth=1.6318, zorder=9)
+y1 = (2**(3/2)*np.sqrt(-1250*x1**2+3825*x1-1798)+167)/100
+y2 = -(2**(3/2)*np.sqrt(-1250*x2**2+3825*x2-1798)-167)/100
+y3 = (np.sqrt(-5819228*x3**2+23560852*x3-20064983)+1322*x3+2437)/2088
+y4 = -(np.sqrt(-5819228*x4**2+23560852*x4-20064983)-1322*x4-2437)/2088
+y5 = (2**(3/2)*np.sqrt(-1250*x5**2+3825*x5-1798)+167)/100
 
-B_1 = ParabolaRDataSet.at["G2", "y^2"]
-B_2 = ParabolaRDataSet.at["G2", "x*y"]
-B_3 = ParabolaRDataSet.at["G2", "y"]
-B_4 = ParabolaRDataSet.at["G2", "x^2"]
-B_5 = ParabolaRDataSet.at["G2", "x"]
-B_6 = ParabolaRDataSet.at["G2", "c"]
-x1 = np.arange(0.127630, ParabolaRDataSet.at["G2", "Sx"], 1.0*(10**(-3)))
-x2 = np.arange(0.127630, ParabolaRDataSet.at["G2", "Ex"], 1.0*(10**(-3)))
-y1 = (np.sqrt((B_2**2-4*B_1*B_4)*x1**2+(2*B_2*B_3-4*B_1*B_5)*x1-4*B_1*B_6+B_3**2)-B_2*x1-B_3)/(2*B_1)
-y2 = -(np.sqrt((B_2**2-4*B_1*B_4)*x2**2+(2*B_2*B_3-4*B_1*B_5)*x2-4*B_1*B_6+B_3**2)+B_2*x2+B_3)/(2*B_1)
-Axes_obj_05.plot(y1, x1, color="dodgerblue", linestyle="solid", linewidth=1.6318)
-Axes_obj_05.plot(y2, x2, color="dodgerblue", linestyle="solid", linewidth=1.6318)
+Axes_obj_04.plot(x1, y1, color="blue", linestyle="dashed", linewidth=1.5, zorder=7)
+Axes_obj_04.plot(x2, y2, color="blue", linestyle="dashed", linewidth=1.5, zorder=7)
+Axes_obj_04.plot(x3, y3, color="blue", linestyle="dashed", linewidth=1.5, zorder=7)
+Axes_obj_04.plot(x4, y4, color="blue", linestyle="dashed", linewidth=1.5, zorder=7)
+Axes_obj_04.plot(x5, y5, color="blue", linestyle="dashed", linewidth=1.5, zorder=7)
 
-B_1 = ParabolaRDataSet.at["G3", "y^2"]
-B_2 = ParabolaRDataSet.at["G3", "x*y"]
-B_3 = ParabolaRDataSet.at["G3", "y"]
-B_4 = ParabolaRDataSet.at["G3", "x^2"]
-B_5 = ParabolaRDataSet.at["G3", "x"]
-B_6 = ParabolaRDataSet.at["G3", "c"]
-x1 = np.arange(0.898070, 1.15, 1.0*(10**(-3)))
-x2 = np.arange(0.898070, 2.80, 1.0*(10**(-3)))
-y1 = (np.sqrt((B_2**2-4*B_1*B_4)*x1**2+(2*B_2*B_3-4*B_1*B_5)*x1-4*B_1*B_6+B_3**2)-B_2*x1-B_3)/(2*B_1)
-y2 = -(np.sqrt((B_2**2-4*B_1*B_4)*x2**2+(2*B_2*B_3-4*B_1*B_5)*x2-4*B_1*B_6+B_3**2)+B_2*x2+B_3)/(2*B_1)
-Axes_obj_05.plot(y1, x1, color="dodgerblue", linestyle="solid", linewidth=1.6318)
-Axes_obj_05.plot(y2, x2, color="dodgerblue", linestyle="solid", linewidth=1.6318)
+A = 29/50
+B = -(6*np.sqrt(152886985058)-5890213)/2909614
+X = np.linspace(A, B, 1000)
+Y1 = (2**(3/2)*np.sqrt(-1250*X**2+3825*X-1798)+167)/100
+Y2 = -(2**(3/2)*np.sqrt(-1250*X**2+3825*X-1798)-167)/100
+Axes_obj_04.fill_between(X, Y2, Y1, facecolor='blue', alpha=0.1)
 
-############################################################################################################
-# (f) Group 1
-############################################################################################################
-Axes_obj_06.set_title("Group 1", size=11.4230,  fontweight="normal")
-Axes_obj_06.set_ylabel("")
-Axes_obj_06.set_xlabel("")
-Axes_obj_06.set_xlim(-0.275, 0.25)
-Axes_obj_06.set_ylim(-0.5, 1.1)
-Axes_obj_06.xaxis.set_major_locator(ticker.MultipleLocator(0.1))
-#Axes_obj_06.xaxis.set_minor_locator(ticker.MultipleLocator(0.05))
-Axes_obj_06.yaxis.set_major_locator(ticker.MultipleLocator(0.5))
-Axes_obj_06.yaxis.set_minor_locator(ticker.MultipleLocator(0.25))
+A = -(6*np.sqrt(152886985058)-5890213)/2909614
+B = 1.3836
+X = np.linspace(A, B, 1000)
+Y1 = (2**(3/2)*np.sqrt(-1250*X**2+3825*X-1798)+167)/100
+Y2 = (np.sqrt(-5819228*X**2+23560852*X-20064983)+1322*X+2437)/2088
+Axes_obj_04.fill_between(X, Y2, Y1, facecolor='blue', alpha=0.1)
 
-Axes_obj_06.vlines(x=0.0, ymin=-0.5, ymax=1.1, color="black", linestyle="solid", linewidth=0.5)
-Axes_obj_06.hlines(y=0.0, xmin=-0.75, xmax=0.85, color="black", linestyle="solid", linewidth=0.5)
+A = -(6*np.sqrt(152886985058)-5890213)/2909614
+B = 2.44602
+X = np.linspace(A, B, 1000)
+Y1 = -(np.sqrt(-5819228*X**2+23560852*X-20064983)-1322*X-2437)/2088
+Y2 = -(2**(3/2)*np.sqrt(-1250*X**2+3825*X-1798)-167)/100
+Axes_obj_04.fill_between(X, Y2, Y1, facecolor='blue', alpha=0.1)
 
-Axes_obj_06.scatter(PatientDataSet[PatientDataSet["Frag1"] == 1].Axis1,
-                    PatientDataSet[PatientDataSet["Frag1"] == 1].Axis2,
-                    color="black", marker="s", s=12, zorder=10)
+A = 2.44602
+B = 62/25
+X = np.linspace(A, B, 1000)
+Y1 = (2**(3/2)*np.sqrt(-1250*X**2+3825*X-1798)+167)/100
+Y2 = -(2**(3/2)*np.sqrt(-1250*X**2+3825*X-1798)-167)/100
+Axes_obj_04.fill_between(X, Y2, Y1, facecolor='blue', alpha=0.1)
 
-a = ParabolaDataSet.at["G1_U", "a"]
-k = ParabolaDataSet.at["G1_U", "Coef."]
-Px = ParabolaDataSet.at["G1_U", "Px"]
-Py = ParabolaDataSet.at["G1_U", "Py"]
-x = np.arange(SolutionDataSet.at["G1", "Lx"]-0.075, SolutionDataSet.at["G1", "Rx"]+0.05, 1.0*(10**(-3)))
-y = a*k*(x - Px)**2 + Py
-Axes_obj_06.plot(x, y, color="red", linestyle="dashed", linewidth=1.0)
+#----------------------------------------------------------------------------------------------------------------------#
+Axes_obj_05 = mpl_inset.inset_axes(Axes_Outer_B, width="130.0%", height="40.00%",
+                                   bbox_to_anchor=(0.4000, -0.025, 0.5, 0.5),
+                                   bbox_transform=Axes_Outer_B.transAxes, loc="center", borderpad=1)
+Axes_obj_05.set_xlabel("Plasma Troponin T, ng/mL", fontweight="normal", size=10)
+Axes_obj_05.set_ylabel("Freq.")
+Axes_obj_05.set_xlim(-0.125, 2.625)
+Axes_obj_05.set_yticklabels([]);
+Axes_obj_05.set_xticks([0.0, 0.5, 1.0, 1.5, 2.0, 2.5])
+Axes_obj_05.xaxis.set_minor_locator(ticker.MultipleLocator(0.25))
+Axes_obj_05.set_xticklabels([0.0, 0.5, 1.0, 1.5, 2.0, 2.5])
+Axes_obj_05.hist(PatientDataSet["Plasma TnT"],
+                 range=(-0.125, 2.625), bins=12, edgecolor="black", color="gray", alpha=0.4, orientation="vertical")
 
-a = ParabolaDataSet.at["G1_R", "a"]
-k = ParabolaDataSet.at["G1_U", "Coef."]
-Px = ParabolaDataSet.at["G1_R", "Px"]
-Py = ParabolaDataSet.at["G1_R", "Py"]
-x = np.arange(SolutionDataSet.at["G1", "Lx"], SolutionDataSet.at["G1", "Rx"], 1.0*(10**(-3)))
-y = a*k*(x - Px)**2 + Py
-Axes_obj_06.plot(x, y, color="dodgerblue", linestyle="solid", linewidth=1.6318)
+from scipy.stats import gaussian_kde
+kde_model = gaussian_kde(PatientDataSet["Plasma TnT"])
+x = np.linspace(-0.125, 2.625, num=100)
+y = kde_model(x)
+Axes_obj_05.plot(x, y*12.5, color="blue")
 
-a = ParabolaDataSet.at["G1_L", "a"]
-k = ParabolaDataSet.at["G1_U", "Coef."]
-Px = ParabolaDataSet.at["G1_L", "Px"]
-Py = ParabolaDataSet.at["G1_L", "Py"]
-x = np.arange(SolutionDataSet.at["G1", "Lx"]-0.075, SolutionDataSet.at["G1", "Rx"]+0.05, 1.0*(10**(-3)))
-y = a*k*(x - Px)**2 + Py
-Axes_obj_06.plot(x, y, color="red", linestyle="dashed", linewidth=1.0)
+for i in range(0, len(PatientDataSet["Plasma TnT"])):
+    Axes_obj_05.scatter(PatientDataSet["Plasma TnT"][i], 0.15, facecolor="none", color="black", marker="s", s=20, zorder=9)
 
-Axes_obj_06.plot(
-    [ParabolaDataSet.at["G1_L", "Px"], ParabolaDataSet.at["G1_U", "Px"]],
-    [ParabolaDataSet.at["G1_L", "Py"], ParabolaDataSet.at["G1_U", "Py"]],
-    color="red", linestyle="solid", linewidth=1.0)
+Axes_obj_05.text(0.125, 7.0, "A", color="red", size=20,
+                 horizontalalignment="center", verticalalignment="center", rotation="horizontal", fontweight="normal")
 
-############################################################################################################
-# (g) Group 2
-############################################################################################################
-Axes_obj_07.set_title("Group 2", size=11.4230, fontweight="normal")
-Axes_obj_07.set_ylabel("")
-Axes_obj_07.set_xlabel("")
-Axes_obj_07.set_xlim(-0.5, 0.625)
-Axes_obj_07.set_ylim(-2.0, 3.75)
-Axes_obj_07.xaxis.set_major_locator(ticker.MultipleLocator(0.2))
-#Axes_obj_07.xaxis.set_minor_locator(ticker.MultipleLocator(0.1))
-#Axes_obj_07.yaxis.set_major_locator(ticker.MultipleLocator(1.0))
-Axes_obj_07.yaxis.set_minor_locator(ticker.MultipleLocator(0.5))
-Axes_obj_07.set_yticklabels([-2.0, -1.0, 0.0, 1.0, 2.0, 3.0])
+Axes_obj_05.text(0.90, 6.75, "B", color="blue", size=20,
+                 horizontalalignment="center", verticalalignment="center", rotation="horizontal", fontweight="normal")
 
-Axes_obj_07.vlines(x=0.0, ymin=-2.0, ymax=3.75, color="black", linestyle="solid", linewidth=0.5)
-Axes_obj_07.hlines(y=0.0, xmin=-0.5, xmax=0.625, color="black", linestyle="solid", linewidth=0.5)
+#----------------------------------------------------------------------------------------------------------------------#
+Axes_obj_06 = mpl_inset.inset_axes(Axes_Outer_B, width="35.00%", height="125.0%",
+                                   bbox_to_anchor=(-0.035, 0.4100, 0.5, 0.5),
+                                   bbox_transform=Axes_Outer_B.transAxes, loc="center", borderpad=1)
+Axes_obj_06.set_xticklabels([]);
+Axes_obj_06.set_ylim(-0.125, 4.125)
+Axes_obj_06.set_xlabel("Freq.")
+Axes_obj_06.set_ylabel("NT-proBNP, ×10 μg/mL", fontweight="normal", size=10)
+Axes_obj_06.set_yticks = [0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5]
+Axes_obj_06.yaxis.set_minor_locator(ticker.MultipleLocator(0.5))
 
-Axes_obj_07.scatter(PatientDataSet[PatientDataSet["Frag1"] == 2].Axis1,
-                    PatientDataSet[PatientDataSet["Frag1"] == 2].Axis2,
-                    color="black", marker="s", s=12, zorder=10)
+Axes_obj_06.hist(PatientDataSet["Plasma NT-proBNP"],
+                 range=(-0.125, 4.125), bins=12, edgecolor="black", color="gray", alpha=0.4, orientation="horizontal")
+Axes_obj_06.invert_xaxis()
 
-a = ParabolaDataSet.at["G2_U", "a"]
-k = ParabolaDataSet.at["G3_U", "Coef."]
-Px = ParabolaDataSet.at["G2_U", "Px"]
-Py = ParabolaDataSet.at["G2_U", "Py"]
-x = np.arange(SolutionDataSet.at["G2", "Lx"]-0.15, SolutionDataSet.at["G2", "Rx"]+0.1, 1.0*(10**(-3)))
-y = a*k*(x - Px)**2 + Py
-Axes_obj_07.plot(x, y, color="red", linestyle="dashed", linewidth=1.0)
+from scipy.stats import gaussian_kde
+kde_model = gaussian_kde(PatientDataSet["Plasma NT-proBNP"])
+x = np.linspace(-0.125, 4.125, num=100)
+y = kde_model(x)
+Axes_obj_06.plot(y*15, x, color="blue")
 
-a = ParabolaDataSet.at["G2_R", "a"]
-k = ParabolaDataSet.at["G3_U", "Coef."]
-Px = ParabolaDataSet.at["G2_R", "Px"]
-Py = ParabolaDataSet.at["G2_R", "Py"]
-x = np.arange(SolutionDataSet.at["G2", "Lx"], SolutionDataSet.at["G2", "Rx"], 1.0*(10**(-3)))
-y = a*k*(x - Px)**2 + Py
-Axes_obj_07.plot(x, y, color="dodgerblue", linestyle="solid", linewidth=1.6318)
+for i in range(0, len(PatientDataSet["Plasma NT-proBNP"])):
+    Axes_obj_06.scatter(0.15, PatientDataSet["Plasma NT-proBNP"][i],
+                        facecolor="none", color="black", marker="s", s=20, zorder=9)
 
-a = ParabolaDataSet.at["G2_L", "a"]
-k = ParabolaDataSet.at["G3_U", "Coef."]
-Px = ParabolaDataSet.at["G2_L", "Px"]
-Py = ParabolaDataSet.at["G2_L", "Py"]
-x = np.arange(SolutionDataSet.at["G2", "Lx"]-0.15, SolutionDataSet.at["G2", "Rx"]+0.1, 1.0*(10**(-3)))
-y = a*k*(x - Px)**2 + Py
-Axes_obj_07.plot(x, y, color="red", linestyle="dashed", linewidth=1.0)
+########################################################################################################################
+# Figure (C)
+########################################################################################################################
+Axes_Outer_C.set_title("Wang, Y et al. Front Cardiovasc Med. 2020\nCOVID-19 (Wuhan, China)", size=11.4230, fontweight="normal")
+Axes_Outer_C.tick_params(length=0.0)
+Axes_Outer_C.set_xticklabels([])
+Axes_Outer_C.set_yticklabels([])
+Axes_Outer_C.text(0.95, 0.5, "Red items: annotated by Kimoto et al. 2021",
+                 size=11.4230, color="red", horizontalalignment="center", verticalalignment="center", rotation=90)
+#----------------------------------------------------------------------------------------------------------------------#
+Axes_obj_07 = mpl_inset.inset_axes(Axes_Outer_C, width="190.0%", height="190.0%",
+                                   bbox_to_anchor=(0.25, 0.25, 0.5, 0.5),
+                                   bbox_transform=Axes_Outer_C.transAxes, loc="center", borderpad=1,
+                                   axes_kwargs={"facecolor": "lightgreen"})
 
-Axes_obj_07.plot(
-    [ParabolaDataSet.at["G2_L", "Px"], ParabolaDataSet.at["G2_U", "Px"]],
-    [ParabolaDataSet.at["G2_L", "Py"], ParabolaDataSet.at["G2_U", "Py"]],
-    color="red", linestyle="solid", linewidth=1.0)
+Axes_obj_07.tick_params(length=0.0); Axes_obj_07.set_xticklabels([]); Axes_obj_07.set_yticklabels([])
+Axes_obj_07.spines["right"].set_visible(False); Axes_obj_07.spines["left"].set_visible(False)
+Axes_obj_07.spines["top"].set_visible(False); Axes_obj_07.spines["bottom"].set_visible(False)
+Axes_obj_07.imshow(plt.imread("Wang_Y_et_al_Front_Cardiovasc_Med_2020_25_7_147_Troponin_BNP_Lymphocyte_02.png"))
 
-############################################################################################################
-# (h) Group 3
-############################################################################################################
-Axes_obj_08.set_title("Group 3",  size=11.4230, fontweight="normal")
-Axes_obj_08.set_ylabel("")
-Axes_obj_08.set_xlabel("")
-Axes_obj_08.set_xlim(-1.8, 2.2)
-Axes_obj_08.set_ylim(-1.25, 2.75)
-#Axes_obj_08.xaxis.set_major_locator(ticker.MultipleLocator(1.0))
-Axes_obj_08.xaxis.set_minor_locator(ticker.MultipleLocator(0.5))
-Axes_obj_08.set_xticklabels([-1.0, 0.0, 1.0, 2.0])
-#Axes_obj_08.yaxis.set_major_locator(ticker.MultipleLocator(1.0))
-Axes_obj_08.yaxis.set_minor_locator(ticker.MultipleLocator(0.5))
-Axes_obj_08.set_yticklabels([-1.0, 0.0, 1.0, 2.0])
+########################################################################################################################
+# Figure (d)
+########################################################################################################################
+Axes_Outer_D.set_title("Caro-Codón et al. Eur J Heart Fail. 2020\nCOVID-19 (Madrid, Spain)", size=11.4230, fontweight="normal")
+Axes_Outer_D.tick_params(length=0.0)
+Axes_Outer_D.set_xticklabels([])
+Axes_Outer_D.set_yticklabels([])
 
-Axes_obj_08.vlines(x=0.0, ymin=-1.25, ymax=2.75, color="black", linestyle="solid", linewidth=0.5)
-Axes_obj_08.hlines(y=0.0, xmin=-1.8, xmax=2.2, color="black", linestyle="solid", linewidth=0.5)
-Axes_obj_08.scatter(PatientDataSet[(PatientDataSet["Frag1"] == 3) | (PatientDataSet["Frag1"] == 4)].Axis1,
-                    PatientDataSet[(PatientDataSet["Frag1"] == 3) | (PatientDataSet["Frag1"] == 4)].Axis2,
-                    color="black", marker="s", s=12, zorder=10)
+#----------------------------------------------------------------------------------------------------------------------#
+Axes_obj_08 = mpl_inset.inset_axes(Axes_Outer_D, width="175.0%", height="175.0%",
+                                   bbox_to_anchor=(0.300, 0.275, 0.5, 0.5),
+                                   bbox_transform=Axes_Outer_D.transAxes, loc="center", borderpad=1)
+Axes_obj_08.tick_params(length=0.0); Axes_obj_08.set_xticklabels([]); Axes_obj_08.set_yticklabels([])
+Axes_obj_08.set_xlabel("LN(Troponin I), ng/L", fontweight="normal", size=10)
+Axes_obj_08.set_ylabel("Percentage of patients (%)", fontweight="normal", size=10)
+Axes_obj_08.imshow(plt.imread("Juan_Caro-Codón_et_al_2021_European_Journal_of_Heart_Failure_Figure_1B.png"))
+Axes_obj_08.text(325, 125, "Blue items: annotated by\nKimoto et al. 2021",
+                 size=11.4230, color="blue", horizontalalignment="center", verticalalignment="center",
+                  rotation=90)
+########################################################################################################################
+# Figure (e)
+########################################################################################################################
+Axes_Outer_E.set_title("Demir et al. Am J Cardiol. 2021\nCOVID-19 (London, United Kingdom)", size=11.4230, fontweight="normal")
+Axes_Outer_E.tick_params(length=0.0)
+Axes_Outer_E.set_xticklabels([])
+Axes_Outer_E.set_yticklabels([])
+Axes_Outer_E.text(0.90, 0.5, "Red items (arrows, letters, and solid line \nfor comparing the distributions): \nannotated by Kimoto et al. 2021",
+                 size=11.4230, color="red", horizontalalignment="center", verticalalignment="center", rotation=90)
+#----------------------------------------------------------------------------------------------------------------------#
+Axes_obj_09 = mpl_inset.inset_axes(Axes_Outer_E, width="190.0%", height="190.0%",
+                                   bbox_to_anchor=(0.25, 0.25, 0.5, 0.5),
+                                   bbox_transform=Axes_Outer_E.transAxes, loc="center", borderpad=1,
+                                   axes_kwargs={"facecolor": "lightgreen"})
 
-a = ParabolaDataSet.at["G3_U", "a"]
-k = ParabolaDataSet.at["G3_U", "Coef."]
-Px = ParabolaDataSet.at["G3_U", "Px"]
-Py = ParabolaDataSet.at["G3_U", "Py"]
-x = np.arange(SolutionDataSet.at["G3", "Lx"]-0.4, SolutionDataSet.at["G3", "Rx"]+0.4, 1.0*(10**(-3)))
-y = a*k*(x - Px)**2 + Py
-Axes_obj_08.plot(x, y, color="red", linestyle="dashed", linewidth=1.0)
+Axes_obj_09.tick_params(length=0.0); Axes_obj_09.set_xticklabels([]); Axes_obj_09.set_yticklabels([])
+Axes_obj_09.spines["right"].set_visible(False); Axes_obj_09.spines["left"].set_visible(False)
+Axes_obj_09.spines["top"].set_visible(False); Axes_obj_09.spines["bottom"].set_visible(False)
+Axes_obj_09.imshow(plt.imread("Demir_et_al_Am_J_Cardiol_2021_15_147_129_136_Figure_2_merged.jpg"))
 
-a = ParabolaDataSet.at["G3_R", "a"]
-k = ParabolaDataSet.at["G3_U", "Coef."]
-Px = ParabolaDataSet.at["G3_R", "Px"]
-Py = ParabolaDataSet.at["G3_R", "Py"]
-x = np.arange(SolutionDataSet.at["G3", "Lx"], SolutionDataSet.at["G3", "Rx"], 1.0*(10**(-3)))
-y = a*k*(x - Px)**2 + Py
-Axes_obj_08.plot(x, y, color="dodgerblue", linestyle="solid", linewidth=1.6318)
+########################################################################################################################
+# Figure (f)
+########################################################################################################################
+Axes_Outer_F.set_title("--------------- EXAMPLE ---------------\nVirtual Example for P-value (N=100)",
+                       size=11.4230, fontweight="normal")
+Axes_Outer_F.tick_params(length=0.0)
+Axes_Outer_F.set_xticklabels([])
+Axes_Outer_F.set_yticklabels([])
+#----------------------------------------------------------------------------------------------------------------------#
+Axes_obj_10 = mpl_inset.inset_axes(Axes_Outer_F, width="165.5%", height="165.5%",
+                                   bbox_to_anchor=(0.32, 0.3, 0.5, 0.5),
+                                   bbox_transform=Axes_Outer_F.transAxes, loc="center", borderpad=1)
+Axes_obj_10.set_xlabel("X: Explanatory Variable", fontweight="normal", size=12.5)
+Axes_obj_10.set_ylabel("Y: Objective Variable", fontweight="normal", size=12.5)
+Axes_obj_10.set_xlim(-0.25, 12.125)
+Axes_obj_10.set_ylim(-0.25, 10.125)
+Axes_obj_10.set_xticks = [0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]
+Axes_obj_10.set_yticks = [0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]
+Axes_obj_10.xaxis.set_minor_locator(ticker.MultipleLocator(0.5))
+Axes_obj_10.yaxis.set_minor_locator(ticker.MultipleLocator(0.5))
 
-a = ParabolaDataSet.at["G3_L", "a"]
-k = ParabolaDataSet.at["G3_U", "Coef."]
-Px = ParabolaDataSet.at["G3_L", "Px"]
-Py = ParabolaDataSet.at["G3_L", "Py"]
-x = np.arange(SolutionDataSet.at["G3", "Lx"]-0.4, SolutionDataSet.at["G3", "Rx"]+0.4, 1.0*(10**(-3)))
-y = a*k*(x - Px)**2 + Py
-Axes_obj_08.plot(x, y, color="red", linestyle="dashed", linewidth=1.0)
+Axes_obj_10.scatter(TestData["Value_X"], TestData["Value_Y"], facecolor="none", color="black", marker="s", s=20, zorder=1)
 
-Axes_obj_08.plot(
-    [ParabolaDataSet.at["G3_L", "Px"], ParabolaDataSet.at["G3_U", "Px"]],
-    [ParabolaDataSet.at["G3_L", "Py"], ParabolaDataSet.at["G3_U", "Py"]],
-    color="red", linestyle="solid", linewidth=1.0)
+x = np.arange(0.0, 5.25, 1.0*(10**(-3)))
+y = float(Coefficients_Line.at["L_1", "Estimate"])*x + float(Coefficients_Line.at["L_0", "Estimate"])
+Axes_obj_10.plot(x, y, color="red", linestyle="solid", linewidth=1.5)
 
-############################################################################################################
+x = np.arange(0.0, 4.125, 1.0*(10**(-3)))
+y = float(Coefficients_Curve.at["C_4", "Estimate"])*x**4 +\
+    float(Coefficients_Curve.at["C_3", "Estimate"])*x**3 +\
+    float(Coefficients_Curve.at["C_2", "Estimate"])*x**2 +\
+    float(Coefficients_Curve.at["C_1", "Estimate"])*x**1 +\
+    float(Coefficients_Curve.at["C_0", "Estimate"])*x**0
+
+Axes_obj_10.plot(x, y, color="blue", linestyle="solid", linewidth=1.5)
+
+x = np.arange(0.0, 4.125, 1.0*(10**(-3)))
+y = float(Coefficients_Curve.at["C_4", "Estimate"])*x**4 +\
+    float(Coefficients_Curve.at["C_0", "Estimate"])*x**0
+Axes_obj_10.plot(x, y, color="blue", linestyle="dashed", linewidth=1.0)
+
+Axes_obj_10.text(7.0, 9.35, "Misuse", horizontalalignment='left', fontsize=15.0, fontweight="normal", color="red")
+Axes_obj_10.text(6.0, 8.25, r"$y = \beta_{0} + \beta_{1}x$", horizontalalignment='left', fontsize=15.0, fontweight="normal", color="red")
+Axes_obj_10.text(6.0, 7.25, r"$\beta_{1}:  P < .001$", horizontalalignment='left', fontsize=15.0, fontweight="normal", color="red")
+Axes_obj_10.text(6.0, 6.3-0.25, r"$Linear$", horizontalalignment='left', fontsize=15.0, fontweight="normal", color="red")
+Axes_obj_10.text(6.0, 5.4-0.25, r"$relationship??$", horizontalalignment='left', fontsize=15.0, fontweight="normal", color="red")
+
+Axes_obj_10.text(4.0, 3.00, r"$y = \beta_{0} + \beta_{1}x + \beta_{2}x^2$", horizontalalignment='left', fontsize=15.0, fontweight="normal", color="blue")
+Axes_obj_10.text(6.3, 2.00, r"$ + \beta_{3}x^3 + \beta_{4}x^4$", horizontalalignment='left', fontsize=15.0, fontweight="normal", color="blue")
+Axes_obj_10.text(4.75, 0.8, r"$\beta_{4}, \beta_{0}:  P < .001$", horizontalalignment='left', fontsize=15.0, fontweight="normal", color="blue")
+Axes_obj_10.text(4.125, 0.0, r"$(important$", horizontalalignment='left', fontsize=15.0, fontweight="normal", color="blue")
+Axes_obj_10.text(9.125, 0.0, r"$items)$", horizontalalignment='left', fontsize=15.0, fontweight="normal", color="blue")
+
+Axes_obj_10.text(0.25, 9.25, r"$Only$", horizontalalignment='left', fontsize=15.0, fontweight="normal", color="blue")
+Axes_obj_10.text(0.0, 8.25, r"$\beta_{4} & \beta_{0}$", horizontalalignment='left', fontsize=15.0, fontweight="normal", color="blue")
+
+Axes_obj_10.quiver(1.2, 7.6, 1.4, -0.2,
+                   scale_units='xy', angles='xy', scale=1, linestyle='solid', linewidth=0.55, width=0.016, color="blue")
+
+Axes_obj_10.annotate(
+    text='\n'.join(["                         ", "                    ", "                    ", "                    ", "                    "]),
+    xy=(8.85-0.1, 7.0), xytext=(8.85-0.1, 7.0), ha='center', va='center', size=15.0, color="red",
+    bbox=dict(boxstyle='round', edgecolor='red', fc='none'), fontweight="normal", zorder=10,
+)
+########################################################################################################################
 
 #Figure_object.tight_layout()
 my_path = os.path.abspath("Figures")
