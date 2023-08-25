@@ -26,6 +26,29 @@ We obtained the image files from each article's website or PubMed. Our program l
 
 The following are the file names of the imported electronic files and the location of the original image files on the internet.
 
+
+----------------------------------------------------------------------------------------------------
+August 25, 2023, Additional Comments
+On August 25, 2023, the figures in the manuscript of the paper were replaced.
+
+ Fig. 6 as Supplement No. 11
+ Fig. S11, Fig. S12, Fig. S13, and Fig. S14 in the original Supplement as Fig. S12, Fig. S13, Fig. S14, Fig. S15.
+
+Also, the sequential numbering of Fig. 7 has been changed to Fig. 6.
+So, the contents of "00_Kimoto_et_al_(2023)_[_Fig_07_].py" are the same as "00_Kimoto_et_al_(2023)_[_Fig_06_].py".
+
+Although large differences exist in the files of the following six programs, these differences are due to the shifting of sequential numbers in the file names.
+
+ 00_Kimoto_et_al_(2023)_[_Fig_06_].py
+ 01_Kimoto_et_al_(2023)_[Fig_S_11].py
+ 01_Kimoto_et_al_(2023)_[Fig_S_12].py
+ 01_Kimoto_et_al_(2023)_[Fig_S_13].py
+ 01_Kimoto_et_al_(2023)_[Fig_S_14].py
+ 01_Kimoto_et_al_(2023)_[Fig_S_15].py
+ 
+----------------------------------------------------------------------------------------------------
+
+
 --------------------------------------------------------------------------------------------------------------------------------------------
 Fig. 4 (filename: journal.pmed.0030307.g001.png)
 --------------------------------------------------------------------------------------------------------------------------------------------
