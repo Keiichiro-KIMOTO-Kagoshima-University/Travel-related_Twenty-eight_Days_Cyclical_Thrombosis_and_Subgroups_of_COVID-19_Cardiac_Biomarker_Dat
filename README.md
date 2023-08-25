@@ -1,13 +1,12 @@
-# Findings_in_Travel-related_Thrombosis_and_COVID-19_Related_Cardiac_Biomarker_Data
+# Travel-related_Twenty-eight_Days_Cyclical_Thrombosis_and_Subgroups_of_COVID-19_Cardiac_Biomarker_Data
 
-Findings in Travel-related Thrombosis and COVID-19 Related Cardiac Biomarker Data: Combination of Novel Review Strategy and Meta-analysis Method Discovered Twenty-eight Days Cycles of Thrombosis and Latent Subgroup Patterns
+Travel-related Twenty-eight Days Cyclical Thrombosis and Subgroups of COVID-19 Cardiac Biomarker Data: Novel Review Strategy and Meta-analysis Method
 --------------------------------------------------------------------------------------------------------------------------------------------
  Readme
 --------------------------------------------------------------------------------------------------------------------------------------------
  Title of the manuscript (research):
 
-Findings in Travel-related Thrombosis and COVID-19 Related Cardiac Biomarker Data: 
-Combination of Novel Review Strategy and Meta-analysis Method Discovered Twenty-eight Days Cycles of Thrombosis and Latent Subgroup Patterns
+Travel-related Twenty-eight Days Cyclical Thrombosis and Subgroups of COVID-19 Cardiac Biomarker Data: Novel Review Strategy and Meta-analysis Method
 
  Author of this research:
 
@@ -46,18 +45,7 @@ BMJ 327, 1072, doi:10.1136/bmj.327.7423.1072 (2003).
 https://www.bmj.com/content/bmj/327/7423/1072/#F1
 
 --------------------------------------------------------------------------------------------------------------------------------------------
-Fig. 6 (filename: PMC7546112_Figure_5A.jpg, PMC7546112_Figure_5B.jpg, and PMC7546112_Figure_5C.jpg)
---------------------------------------------------------------------------------------------------------------------------------------------
-Matsushita et al.:
-Matsushita, K. et al.
-The Relationship of COVID-19 Severity with Cardiovascular Disease and Its Traditional Risk Factors:
-A Systematic Review and Meta-Analysis.
-Glob Heart 15, 64, doi:10.5334/gh.814 (2020).
-https://globalheartjournal.com/article/10.5334/gh.814/#F5
-https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7546112/figure/F5/
-
---------------------------------------------------------------------------------------------------------------------------------------------
-Fig. 7 (filename: jamacardiol-5-811-g001.jpg)
+Fig. 6 (filename: jamacardiol-5-811-g001.jpg)
 --------------------------------------------------------------------------------------------------------------------------------------------
 Guo et al.:
 Guo, T. et al. Cardiovascular Implications of Fatal Outcomes of Patients With Coronavirus Disease 2019 (COVID-19).
@@ -82,7 +70,18 @@ Clérel, M. & Caillard, G.
 Bull Acad Natl Med 183, 985–997; discussion 997-1001 (1999).
 
 --------------------------------------------------------------------------------------------------------------------------------------------
-Fig. S12 (filename: Guo_2020_Fig1B.png, Guo_2020_Fig1B_origin.png, Guo_2020_Fig1B_P_value_cut.png, Wang_Y_et_al_Front_Cardiovasc_Med_2020_25_7_147_Troponin_BNP_Lymphocyte_02.png, Juan_Caro-Codón_et_al_2021_European_Journal_of_Heart_Failure_Figure_1B.png, and Demir_et_al_Am_J_Cardiol_2021_15_147_129_136_Figure_2_merged.jpg)
+Fig. S11 (filename: PMC7546112_Figure_5A.jpg, PMC7546112_Figure_5B.jpg, and PMC7546112_Figure_5C.jpg)
+--------------------------------------------------------------------------------------------------------------------------------------------
+Matsushita et al.:
+Matsushita, K. et al.
+The Relationship of COVID-19 Severity with Cardiovascular Disease and Its Traditional Risk Factors:
+A Systematic Review and Meta-Analysis.
+Glob Heart 15, 64, doi:10.5334/gh.814 (2020).
+https://globalheartjournal.com/article/10.5334/gh.814/#F5
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7546112/figure/F5/
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+Fig. S13 (filename: Guo_2020_Fig1B.png, Guo_2020_Fig1B_origin.png, Guo_2020_Fig1B_P_value_cut.png, Wang_Y_et_al_Front_Cardiovasc_Med_2020_25_7_147_Troponin_BNP_Lymphocyte_02.png, Juan_Caro-Codón_et_al_2021_European_Journal_of_Heart_Failure_Figure_1B.png, and Demir_et_al_Am_J_Cardiol_2021_15_147_129_136_Figure_2_merged.jpg)
 --------------------------------------------------------------------------------------------------------------------------------------------
 Guo et al.:
 Guo, T. et al. Cardiovascular Implications of Fatal Outcomes of Patients With Coronavirus Disease 2019 (COVID-19).
@@ -110,7 +109,7 @@ https://www.ajconline.org/cms/attachment/236eb54d-703b-4bb3-87c2-c868f974c265/gr
 https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7895690/figure/fig0002/
 
 --------------------------------------------------------------------------------------------------------------------------------------------
-Fig. S13 (filename: Guo_2020_Fig1B.png and Sugawa_2018_Fig1.png)
+Fig. S14 (filename: Guo_2020_Fig1B.png and Sugawa_2018_Fig1.png)
 --------------------------------------------------------------------------------------------------------------------------------------------
 Guo et al.:
 Guo, T. et al. Cardiovascular Implications of Fatal Outcomes of Patients With Coronavirus Disease 2019 (COVID-19).
@@ -125,7 +124,7 @@ https://www.nature.com/articles/s41598-018-23441-z/figures/1
 https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5865159/figure/Fig1/
 
 --------------------------------------------------------------------------------------------------------------------------------------------
-Fig. S14 (filename: Guo_2020_Fig1A.png)
+Fig. S15 (filename: Guo_2020_Fig1A.png)
 --------------------------------------------------------------------------------------------------------------------------------------------
 Guo et al.:
 Guo, T. et al. Cardiovascular Implications of Fatal Outcomes of Patients With Coronavirus Disease 2019 (COVID-19).
